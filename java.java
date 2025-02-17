@@ -1,2 +1,0 @@
-system 
-siki naw naw
