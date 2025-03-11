@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./LeftSideBar.css";
 
+
 const LeftSideBar: React.FC = () => {
   return (
     <div className="left-sidebar">
