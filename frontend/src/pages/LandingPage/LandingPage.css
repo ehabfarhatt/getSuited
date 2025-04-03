@@ -1,65 +1,115 @@
 /* Full-page gradient background to match SignIn/SignUp style */
 .landing-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
-  }
-  
-  /* The hero section sits below the navbar */
-  .hero-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #ffffff;
-    padding: 2rem;
-  }
-  
-  /* Main title text */
-  .hero-section h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-  }
-  
-  /* A short paragraph / tagline */
-  .hero-tagline {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin-bottom: 2rem;
-    line-height: 1.5;
-  }
-  
-  /* Wrapper for call-to-action buttons/links */
-  .hero-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  /* Primary CTA button (e.g., Sign Up) */
-  .cta-button {
-    display: inline-block;
-    background-color: #ffffff;
-    color: #333333;
-    text-decoration: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: background 0.3s;
-  }
-  
-  .cta-button:hover {
-    background-color: #f1f1f1;
-  }
-  
-  /* Secondary link (e.g., "Already have an account? Sign In") */
-  .secondary-link {
-    color: #ffffff;
-    text-decoration: underline;
-    font-size: 1rem;
-  }
-  
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
+}
+
+/* The hero section sits below the navbar */
+.hero-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  color: #ffffff;
+  padding: 3rem 1rem;
+}
+
+/* Main title text */
+.hero-section h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+/* A short paragraph / tagline */
+.hero-tagline {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+/* Wrapper for action buttons or links */
+.hero-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Profile button for signed-in users */
+.profile-button {
+  display: flex;
+  align-items: center;
+  border: 2px solid #fff;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  color: #fff;
+  text-decoration: none;
+}
+
+.profile-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  border: 2px solid white;
+}
+
+.default-profile-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.profile-name {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Sign in link */
+.secondary-link {
+  color: #ffffff;
+  text-decoration: underline;
+  font-size: 1rem;
+}
+
+/* Platform features section */
+.features-section {
+  margin-top: 2rem;
+  color: #fff;
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 400px;
+  font-size: 1.2rem;
+  line-height: 2;
+}
