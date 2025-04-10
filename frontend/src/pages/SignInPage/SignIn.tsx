@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./SignIn.css";
 
-// Optional: React Icons for social & SSO icons
-import { FaFacebookF, FaApple, FaGoogle, FaTwitter, FaLock } from "react-icons/fa";
+import * as FaIcons from "react-icons/fa";
 
 interface SignInProps {
   onSignIn?: (email: string, password: string) => void; 
@@ -18,11 +17,32 @@ const SignIn: React.FC<SignInProps> = ({ onSignIn }) => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Sign in with:", email, password);
-    if (onSignIn) {
-      onSignIn(email, password);
+  
+    try {
+      const response = await fetch("http://localhost:5001/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Login failed");
+      }
+  
+      const { token, user } = await response.json();
+      console.log("Login successful:", user);
+  
+      // Store token in localStorage or cookies
+      localStorage.setItem("token", token);
+  
+      // Redirect to homepage or dashboard
+      window.location.href = "/";
+  
+    } catch (err: any) {
+      alert(err.message);
     }
   };
 
@@ -72,27 +92,6 @@ const SignIn: React.FC<SignInProps> = ({ onSignIn }) => {
           </button>
         </form>
 
-        {/* Social Login Buttons */}
-        <div className="social-buttons">
-          <button className="social-btn">
-            <FaFacebookF />
-          </button>
-          <button className="social-btn">
-            <FaApple />
-          </button>
-          <button className="social-btn">
-            <FaGoogle />
-          </button>
-          <button className="social-btn">
-            <FaTwitter />
-          </button>
-        </div>
-
-        {/* SSO Login Button */}
-        <button className="sso-btn">
-          <FaLock className="lock-icon" />
-          Log in with SSO
-        </button>
       </div>
     </div>
   );

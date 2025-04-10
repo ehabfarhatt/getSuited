@@ -3,6 +3,7 @@ import { controller, httpPost, httpGet, request, response } from 'inversify-expr
 import { inject } from 'inversify';
 import TYPES from '../config/types';
 import QuestionnaireService from '../services/QuestionnaireService';
+import { authenticateJWT } from '../middleware/AuthMiddleware';
 
 @controller('/questionnaire')
 export default class QuestionnaireController {
@@ -29,7 +30,7 @@ export default class QuestionnaireController {
         }
     }
 
-    @httpPost('/')
+    @httpPost('/', authenticateJWT)
     public async createQuestion(@request() req: Request, @response() res: Response): Promise<void> {
         try {
             const { question, options, correctAnswer, category } = req.body;

@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import {
-  FaFacebookF,
-  FaApple,
-  FaGoogle,
-  FaTwitter,
-  FaLock,
-} from "react-icons/fa";
-
+import * as FaIcons from "react-icons/fa";
 interface SignUpProps {
   onSignUp?: (name: string, email: string, password: string) => void;
 }
@@ -23,22 +16,35 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Simple example check
+  
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-
-    // If onSignUp prop is provided, call it
-    if (onSignUp) {
-      onSignUp(name, email, password);
+  
+    try {
+      const response = await fetch("http://localhost:5001/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+  
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to register");
+      }
+  
+      const data = await response.json();
+      console.log("User created:", data);
+  
+      // You can redirect here or store token in localStorage if login returns token
+      window.location.href = "/"; // or use navigate('/') if using React Router
+  
+    } catch (err: any) {
+      alert(err.message);
     }
-
-    console.log("Sign up with:", name, email, password);
-    // Clear fields or handle next steps
   };
 
   return (
@@ -113,27 +119,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
           </button>
         </form>
 
-        {/* Social Signup Buttons */}
-        <div className="social-buttons">
-          <button className="social-btn">
-            <FaFacebookF />
-          </button>
-          <button className="social-btn">
-            <FaApple />
-          </button>
-          <button className="social-btn">
-            <FaGoogle />
-          </button>
-          <button className="social-btn">
-            <FaTwitter />
-          </button>
-        </div>
-
-        {/* SSO Signup */}
-        <button className="sso-btn">
-          <FaLock className="lock-icon" />
-          Sign up with SSO
-        </button>
+        
       </div>
     </div>
   );
