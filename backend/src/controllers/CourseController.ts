@@ -3,12 +3,13 @@ import { controller, httpPost, httpGet, requestParam, requestBody, response } fr
 import { inject } from 'inversify';
 import TYPES from '../config/types';
 import CourseService from '../services/CourseService';
+import { authenticateJWT } from '../middleware/AuthMiddleware';
 
 @controller('/courses')
 export default class CourseController {
     constructor(@inject(TYPES.CourseService) private courseService: CourseService) {}
 
-    @httpPost('/add')
+    @httpPost('/add', authenticateJWT)
     public async createCourse(
         @requestBody() body: { title: string; description: string; price?: number },
         @response() res: Response

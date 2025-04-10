@@ -3,6 +3,7 @@ import { controller, httpPost, httpGet, httpPatch, request, response } from 'inv
 import { inject } from 'inversify';
 import TYPES from '../config/types';
 import UserService from '../services/UserService';
+import { authenticateJWT } from '../middleware/AuthMiddleware';
 
 @controller('/users')
 export default class UserController {
@@ -42,7 +43,7 @@ export default class UserController {
         }
     }
 
-    @httpPatch('/:id/score')
+    @httpPatch('/:id/score', authenticateJWT)
     public async updateUserScore(@request() req: Request, @response() res: Response): Promise<void> {
         try {
             const { score } = req.body;
@@ -53,7 +54,7 @@ export default class UserController {
         }
     }
 
-    @httpPatch('/:id/profilePicture')
+    @httpPatch('/:id/profilePicture', authenticateJWT)
     public async updateProfilePicture(@request() req: Request, @response() res: Response): Promise<void> {
         try {
             const { profilePicture } = req.body;

@@ -3,12 +3,13 @@ import { controller, httpPost, httpGet, request, response } from 'inversify-expr
 import { inject } from 'inversify';
 import TYPES from '../config/types';
 import InterviewService from '../services/InterviewService';
+import { authenticateJWT } from '../middleware/AuthMiddleware';
 
 @controller('/interviews')
 export default class InterviewController {
     constructor(@inject(TYPES.InterviewService) private interviewService: InterviewService) {}
 
-    @httpPost('/')
+    @httpPost('/', authenticateJWT)
     public async createInterview(@request() req: Request, @response() res: Response): Promise<void> {
         try {
             const { user, type, score, feedback } = req.body;
