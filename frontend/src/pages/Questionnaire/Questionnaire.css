@@ -1,0 +1,96 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    padding: 20px;
+  }
+  
+  .content {
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .dropdown {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    background: white;
+  }
+  
+  .dropdown:focus {
+    outline: none;
+    border-color: #2f2f8d;
+  }
+  
+  .questionBox {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    font-size: 18px;
+    color: #2f2f8d;
+    margin-bottom: 15px;
+  }
+  
+  .nextButton {
+    padding: 10px 15px;
+    background: #2f2f8d;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .nextButton:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .nextButton:hover:not(:disabled) {
+    background: #1e1e6d;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      width: 95%;
+      padding: 20px;
+    }
+    
+    .dropdown {
+      font-size: 14px;
+    }
+  
+    .nextButton {
+      font-size: 14px;
+    }
+  }
+  
