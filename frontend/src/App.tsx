@@ -11,6 +11,7 @@ import Courses from "./pages/CoursesPage/Courses";
 
 // Components
 import Loading from "./components/Loading/Loading";
+import Questionnaire from "./pages/Questionnaire/Questionnaire";
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
@@ -28,6 +29,7 @@ const App: React.FC = () => {
       <Route path="/register" element={<SignUp />} />
       <Route path="/courses" element={<Courses />} />
       <Route path="/courses/:courseId" element={<CourseDetails />} />
+      <Route path="/questionnaire" element={<Questionnaire />} />
       {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
