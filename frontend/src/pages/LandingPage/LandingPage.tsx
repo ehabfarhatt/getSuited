@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./LandingPage.css";
 import Navbar from "../../components/Navbar/Navbar";
+import Recdatabox from "../../components/Recdatabox/Recdatabox";
+import SliderBar from "../../components/SlideBar/SliderBar";
 import { useNavigate } from "react-router-dom";
 
 interface UserData {
@@ -8,9 +10,17 @@ interface UserData {
   profilePicture?: string;
 }
 
+interface Course {
+  _id: string;
+  Title: string;
+  Description: string;
+  Category: string;
+}
+
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<UserData | null>(null);
+  const [courses, setCourses] = useState<Course[]>([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -35,57 +45,50 @@ const LandingPage: React.FC = () => {
           localStorage.removeItem("token");
         });
     }
+
+    fetch("http://localhost:5001/courses")
+      .then((res) => res.json())
+      .then((data) => setCourses(data.slice(0, 10)))
+      .catch((err) => console.error("Failed to fetch courses", err));
   }, []);
 
   return (
     <div className="landing-container">
-      <Navbar />
+      <Navbar user={user} />
 
-      <div className="hero-section">
-        <h1>Welcome to getSuited!</h1>
-        <p className="hero-tagline">
-          Bridge the gap between academic knowledge and real-world career demands.
-          Level up your skills, practice interviews, and launch your dream career.
-        </p>
+      <div className="landing-body">
+        {/* Courses Display */}
+        <div className="courses-section">
+        <h1 className="welcome-heading">
+          {user ? `Welcome back, ${user.name}` : "Welcome to getSuited"}
+        </h1>
+        <h2>Featured Courses</h2>
 
-        <div className="hero-buttons">
-          {user ? (
-            <button
-              className="profile-button"
-              onClick={() => navigate("/profile")}
-            >
-              {user.profilePicture ? (
-                <img
-                  src={user.profilePicture}
-                  alt="profile"
-                  className="profile-picture"
+          <SliderBar>
+            {courses.map(course => (
+              <div
+                key={course._id}
+                onClick={() => navigate(`/courses/${course._id}`)}
+                style={{ minWidth: "300px", cursor: "pointer" }}
+              >
+                <Recdatabox
+                  header={course.Title}
+                  data={[
+                    { label: "Description", value: course.Description },
+                    { label: "Category", value: course.Category },
+                  ]}
+                  footerText="View Course"
+                  footerLink="#"
                 />
-              ) : (
-                <div className="default-profile-icon">👤</div>
-              )}
-              <span className="profile-name">{user.name}</span>
-            </button>
-          ) : (
-            <>
-              <a href="/signup" className="cta-button">
-                Register Now
-              </a>
-              <a href="/signin" className="secondary-link">
-                Already have an account? Sign in
-              </a>
-            </>
-          )}
-        </div>
+              </div>
+            ))}
+          </SliderBar>
 
-        {/* Features Section Below */}
-        <div className="features-section">
-          <h2>Explore Our Platform</h2>
-          <ul className="feature-list">
-            <li>📚 Personalized Courses</li>
-            <li>🧠 AI Interview Practice</li>
-            <li>📝 Behavioral Training</li>
-            <li>📊 Progress Tracking</li>
-          </ul>
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <button className="see-all-btn" onClick={() => navigate("/courses")}>
+              See All
+            </button>
+          </div>
         </div>
       </div>
     </div>
