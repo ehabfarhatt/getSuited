@@ -6,6 +6,10 @@ import dotenv from 'dotenv';
 import connectDB from './config/database';
 import container from './config/inversify.config';
 import { InversifyExpressServer } from 'inversify-express-utils';
+import session from 'express-session';
+import passport from 'passport';
+import './passport/googleStrategy'; // register passport strategy
+import './passport/linkedinStrategy';
 
 // auto‑register controllers
 import './controllers/AuthController';
@@ -13,6 +17,8 @@ import './controllers/UserController';
 import './controllers/CourseController';
 import './controllers/InterviewController';
 import './controllers/QuestionnaireController';
+import './controllers/GoogleAuthController';
+import './controllers/LinkedInAuthController';
 
 dotenv.config();
 connectDB();
@@ -34,10 +40,19 @@ server.setConfig(app => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
+  app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+  }));
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   /* ---------- Static uploads ---------- */
   //  …/backend/uploads/  →  http://localhost:5001/uploads/<file>
   // in server.ts
-app.use('/uploads', express.static(path.resolve(__dirname, '../../uploads')));
+  app.use('/uploads', express.static(path.resolve(__dirname, '../../uploads')));
 
 });
 

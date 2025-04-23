@@ -3,7 +3,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
+  background-color: #ffffff;
 }
 
 /* The hero section sits below the navbar */
@@ -112,4 +112,47 @@
   max-width: 400px;
   font-size: 1.2rem;
   line-height: 2;
+}
+
+.courses-section {
+  padding: 40px 40px 20px;
+}
+
+.welcome-heading {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #1f2937;
+  text-align: left;
+}
+
+.see-all-btn {
+  background-color: #1f73b7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.see-all-btn:hover {
+  background-color: #155a99;
+}
+
+.horizontal-courses-scroll {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  scroll-behavior: smooth;
+}
+
+.horizontal-courses-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.horizontal-courses-scroll::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 3px;
 }

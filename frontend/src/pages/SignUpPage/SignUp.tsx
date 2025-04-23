@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import * as FaIcons from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa6";
+import { FaLinkedin } from 'react-icons/fa';
+
 interface SignUpProps {
   onSignUp?: (name: string, email: string, password: string) => void;
 }
@@ -12,39 +14,37 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleToggleShowPassword = () => {
-    setShowPassword((prev) => !prev);
-  };
+  const handleToggleShowPassword = () => setShowPassword((prev) => !prev);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-  
+
     try {
       const response = await fetch("http://localhost:5001/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
       });
-  
+
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.message || "Failed to register");
       }
-  
+
       const data = await response.json();
-      console.log("User created:", data);
-  
-      // You can redirect here or store token in localStorage if login returns token
-      window.location.href = "/"; // or use navigate('/') if using React Router
-  
+      window.location.href = "/";
     } catch (err: any) {
       alert(err.message);
     }
+  };
+
+  const handleGoogleSignup = () => {
+    window.location.href = "http://localhost:5001/auth/google";
   };
 
   return (
@@ -55,8 +55,16 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
           Already have an account? <a href="/signin">Sign in here</a>
         </p>
 
+        <div className="social-buttons">
+          <button className="google-btn" onClick={handleGoogleSignup}>
+            <FaGoogle /> Sign up with Google
+          </button>
+          <button className="linkedin-btn" onClick={() => window.location.href = "http://localhost:5001/auth/linkedin"}>
+          <FaLinkedin /> Continue with LinkedIn
+        </button>
+        </div>
+
         <form onSubmit={handleSubmit}>
-          {/* Name */}
           <div className="input-group">
             <label>Your Name</label>
             <input
@@ -68,7 +76,6 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
             />
           </div>
 
-          {/* Email */}
           <div className="input-group">
             <label>Email address</label>
             <input
@@ -80,7 +87,6 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
             />
           </div>
 
-          {/* Password */}
           <div className="input-group">
             <label>Password</label>
             <div className="password-wrapper">
@@ -97,7 +103,6 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
             </div>
           </div>
 
-          {/* Confirm Password */}
           <div className="input-group">
             <label>Confirm Password</label>
             <div className="password-wrapper">
@@ -118,8 +123,6 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
             Sign Up
           </button>
         </form>
-
-        
       </div>
     </div>
   );

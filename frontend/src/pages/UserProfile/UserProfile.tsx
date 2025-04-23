@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import DataBox from "../../components/Databox/Databox";
 import { FaEdit } from "react-icons/fa";
 import "./UserProfile.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -11,6 +12,8 @@ const UserProfile: React.FC = () => {
   const [nameInput, setNameInput] = useState("");
   const [interviewCount, setInterviewCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -106,6 +109,12 @@ const UserProfile: React.FC = () => {
     }
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/signin");
+  };
+
   if (loading || !user) {
     return (
       <div className="loading-screen">
@@ -117,7 +126,7 @@ const UserProfile: React.FC = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar user={user}/>
       <div className="profile-container">
         <div className="profile-banner" />
 
@@ -167,6 +176,9 @@ const UserProfile: React.FC = () => {
                   onClick={() => setEditingName(true)}
                   className="edit-icon"
                 />
+                <button className="signout-button" onClick={handleSignOut}>
+                  Sign Out
+                </button>
               </>
             )}
           </div>
