@@ -30,6 +30,7 @@ const SignIn: React.FC<SignInProps> = ({ onSignIn }) => {
 
       const { token, user } = await response.json();
       localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
       window.location.href = "/";
     } catch (err: any) {
       alert(err.message);

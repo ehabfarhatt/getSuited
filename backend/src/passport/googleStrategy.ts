@@ -1,6 +1,8 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy, StrategyOptions } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
+import User from '../models/User'; // Adjust path as needed
+
 dotenv.config();
 
 const options: StrategyOptions = {
@@ -15,14 +17,27 @@ passport.use(new GoogleStrategy(options, async (
   profile,
   done
 ) => {
-  const user = {
-    id: profile.id,
-    name: profile.displayName,
-    email: profile.emails?.[0].value,
-    profilePicture: profile.photos?.[0].value,
-  };
+  try {
+    const email = profile.emails?.[0].value;
+    const name = profile.displayName;
+    const profilePicture = profile.photos?.[0].value;
 
-  return done(null, user);
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = new User({
+        name,
+        email,
+        password: 'google-auth',
+        profilePicture,
+      });
+      await user.save();
+    }
+
+    return done(null, user);
+  } catch (error) {
+    return done(error);
+  }
 }));
 
 passport.serializeUser((user: any, done) => {

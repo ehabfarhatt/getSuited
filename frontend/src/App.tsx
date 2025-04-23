@@ -13,6 +13,7 @@ import OAuthSuccess from './pages/OAuthSuccess';
 // Components
 import Loading from "./components/Loading/Loading";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
+import UserProfile from "./pages/UserProfile/UserProfile";
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
@@ -32,6 +33,7 @@ const App: React.FC = () => {
       <Route path="/courses/:courseId" element={<CourseDetails />} />
       <Route path="/questionnaire" element={<Questionnaire />} />
       <Route path="/oauth-success" element={<OAuthSuccess />} />
+      <Route path="/userprofile" element={<UserProfile />} />
       {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
+
+interface User {
+  name: string;
+  profilePicture?: string;
+}
 
 interface UserData {
   name: string;
@@ -31,7 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
         {user ? (
           <button
             className="profile-button"
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/UserProfile")}
           >
             {user.profilePicture ? (
               <img
@@ -45,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
             <span className="profile-name">{user.name}</span>
           </button>
         ) : (
-          <Link to="/signup" className="cta-button">Register Now →</Link>
+          <Link to="/register" className="cta-button">Register Now →</Link>
         )}
       </div>
     </nav>

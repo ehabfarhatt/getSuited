@@ -3,8 +3,14 @@ import "./Questionnaire.css";
 import Navbar from "../../components/Navbar/Navbar";
 import DataBox from "../../components/Databox/Databox";
 
+interface UserData {
+  name: string;
+  profilePicture?: string;
+}
+
 const Questionnaire: React.FC = () => {
   const [selectedMajor, setSelectedMajor] = useState<string>("");
+  const [user, setUser] = useState<UserData | null>(null);
 
   const majors = [
     "Data Engineer",
@@ -21,7 +27,7 @@ const Questionnaire: React.FC = () => {
   return (
     <div className="questionnaire-container">
       {/* Navigation Bar at the top */}
-      <Navbar />
+      <Navbar user={user} />
 
       {/* Main Questionnaire Section */}
       <div className="questionnaire-content">

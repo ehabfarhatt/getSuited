@@ -1,4 +1,4 @@
-// src/pages/OAuthSuccess.tsx
+// File: frontend/src/pages/OAuthSuccess.tsx
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,12 +10,29 @@ const OAuthSuccess = () => {
     const token = params.get("token");
 
     if (token) {
-      localStorage.setItem("token", token);
-      navigate("/"); // Redirect to home
+      fetch("http://localhost:5001/auth/verify", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.decoded) {
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(data.decoded));
+            navigate("/");
+          } else {
+            navigate("/signin");
+          }
+        })
+        .catch(() => navigate("/signin"));
+    } else {
+      navigate("/signin");
     }
   }, []);
 
-  return <p>Logging you in with Google...</p>;
+  return <p>Redirecting...</p>;
 };
 
 export default OAuthSuccess;

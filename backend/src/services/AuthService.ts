@@ -21,6 +21,7 @@ class AuthService {
         const user = await User.findOne({ email });
         if (!user) throw new Error('User not found');
 
+        if (!user.password) throw new Error('User password is missing');
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) throw new Error('Invalid credentials');
 
