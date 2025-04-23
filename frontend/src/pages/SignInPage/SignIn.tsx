@@ -37,6 +37,7 @@ const SignIn: React.FC<SignInProps> = ({ onSignIn }) => {
   
       // Store token in localStorage or cookies
       localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
   
       // Redirect to homepage or dashboard
       window.location.href = "/";

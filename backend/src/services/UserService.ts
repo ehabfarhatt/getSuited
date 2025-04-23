@@ -1,33 +1,40 @@
 import { injectable } from 'inversify';
-import 'reflect-metadata';
-import User, { UserDocument } from '../models/User';
 import bcrypt from 'bcrypt';
+import User, { UserDocument } from '../models/User';
 
 @injectable()
 export default class UserService {
-    private saltRound = 10;
-    async createUser(data: {name: string, email: string, password: string, profilePicture?: string}): Promise<UserDocument> {
-        try{
-            const hashedPass = await bcrypt.hash(data.password, this.saltRound);
-            return await User.create({ ...data, password: hashedPass});
-        }catch(error){
-            throw new Error('Error creating user: ' + (error as Error).message);
-        }
-    }
+  private readonly saltRounds = 10;
 
-    async getAllUsers() {
-        return await User.find();
-    }
+  /* ----------  Create ---------- */
+  async createUser(data: { name: string; email: string; password: string; profilePicture?: string; }): Promise<UserDocument> {
+    const hashed = await bcrypt.hash(data.password, this.saltRounds);
+    return User.create({ ...data, password: hashed });
+  }
 
-    async getUserById(userId: string) {
-        return await User.findById(userId);
-    }
+  /* ----------  Read ---------- */
+  getAllUsers() { 
+    return User.find(); 
+  }
 
-    async updateUserScore(userId: string, score: number) {
-        return await User.findByIdAndUpdate(userId, { score }, { new: true });
-    }
+  getUserById(id: string) { 
+    return User.findById(id); 
+  }
 
-    async updateProfilePicture(userId: string, profilePicture: string) {
-        return await User.findByIdAndUpdate(userId, { profilePicture }, { new: true });
+  /* ----------  Update ---------- */
+  updateUserScore(id: string, score: number) {
+    return User.findByIdAndUpdate(id, { score }, { new: true });
+  }
+
+  updateUserName(id: string, name: string) {
+    return User.findByIdAndUpdate(id, { name }, { new: true });
+  }
+
+  async updateProfilePicture(id: string, url: string) {
+    const user = await User.findByIdAndUpdate(id, { profilePicture: url }, { new: true });
+    if (!user) {
+      throw new Error('User not found');
     }
+    return user;
+  }
 }
