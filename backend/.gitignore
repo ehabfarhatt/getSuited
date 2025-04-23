@@ -28,3 +28,5 @@ coverage/
 
 # Optional: Ignore temporary files from Jest and Supertest
 *.tmp
+
+.env
