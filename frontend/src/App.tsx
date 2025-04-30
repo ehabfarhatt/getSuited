@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUpPage/SignUp";
 import CourseDetails from "./pages/CourseDetailsPage/CourseDetails";
 import Courses from "./pages/CoursesPage/Courses";
 import OAuthSuccess from './pages/OAuthSuccess';
+import InterviewHome from "./pages/Interview/InterviewHome";
 //import Dashboard from "./pages/DashboardPage/Dashboard"; // Create this page to hold dashboard logic
 
 // Components
@@ -34,6 +35,7 @@ const App: React.FC = () => {
       <Route path="/questionnaire" element={<Questionnaire />} />
       <Route path="/oauth-success" element={<OAuthSuccess />} />
       <Route path="/userprofile" element={<UserProfile />} />
+      <Route path="/interview" element={<InterviewHome />} />
       {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

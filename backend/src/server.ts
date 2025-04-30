@@ -15,10 +15,11 @@ import './passport/linkedinStrategy';
 import './controllers/AuthController';
 import './controllers/UserController';
 import './controllers/CourseController';
-import './controllers/InterviewController';
+//import './controllers/InterviewController';
 import './controllers/QuestionnaireController';
 import './controllers/GoogleAuthController';
 import './controllers/LinkedInAuthController';
+import './controllers/InterviewControllerAPI';
 
 dotenv.config();
 connectDB();
