@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Recdatabox from "../../components/Recdatabox/Recdatabox";
 import SliderBar from "../../components/SlideBar/SliderBar";
 import { useNavigate } from "react-router-dom";
+import ImageSlider from "../../components/ImageSlider/ImageSlider";
 
 interface UserData {
   name: string;
@@ -56,42 +57,65 @@ const LandingPage: React.FC = () => {
     <div className="landing-container">
       <Navbar user={user} />
 
-      <div className="landing-body">
-        {/* Courses Display */}
-        <div className="courses-section">
-        <h1 className="welcome-heading">
-          {user ? `Welcome back, ${user.name}` : "Welcome to getSuited"}
-        </h1>
-        <h2>Featured Courses</h2>
+      {/* Announcement Image Slider */}
+  <div className="announcement-slider">
+    <ImageSlider
+      images={[
+        { src: "/images/slide1.jpg", link: "/announcement/1" },
+        { src: "/images/slide2.jpg", link: "/announcement/2" },
+        // Add more slides
+      ]}
+    />
+  </div>
 
-          <SliderBar>
-            {courses.map(course => (
-              <div
-                key={course._id}
-                onClick={() => navigate(`/courses/${course._id}`)}
-                style={{ minWidth: "300px", cursor: "pointer" }}
-              >
-                <Recdatabox
-                  header={course.Title}
-                  data={[
-                    { label: "Description", value: course.Description },
-                    { label: "Category", value: course.Category },
-                  ]}
-                  footerText="View Course"
-                  footerLink="#"
-                />
-              </div>
-            ))}
-          </SliderBar>
+  <div className="landing-body">
 
-          <div style={{ textAlign: "center", marginTop: "20px" }}>
+    {/* Featured Courses */}
+    <div className="section">
+      <h2>Featured Courses</h2>
+      <SliderBar>
+        {courses.map(course => (
+          <div key={course._id} onClick={() => navigate(`/courses/${course._id}`)}>
+            <Recdatabox
+              header={course.Title}
+              data={[
+                { label: "Description", value: course.Description },
+                { label: "Category", value: course.Category },
+              ]}
+              footerText="View Course"
+              footerLink="#"
+            />
+          </div>
+        ))}
+      </SliderBar>
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
             <button className="see-all-btn" onClick={() => navigate("/courses")}>
               See All
             </button>
           </div>
-        </div>
-      </div>
     </div>
+
+    {/* Interview Section */}
+    <div className="section">
+      <h2>Interview Practice</h2>
+      <SliderBar>
+        <Recdatabox header="Technical Interview" data={[{ label: "Type", value: "Coding" }]} footerText="Start" footerLink="/interview/technical" />
+        <Recdatabox header="Behavioral Interview" data={[{ label: "Type", value: "Soft Skills" }]} footerText="Start" footerLink="/interview/behavioral" />
+      </SliderBar>
+    </div>
+
+    {/* Questionnaire Section */}
+    <div className="section">
+      <h2>Questionnaire</h2>
+      <SliderBar>
+        <Recdatabox header="Skill Assessment" data={[{ label: "Level", value: "Beginner" }]} footerText="Take Test" footerLink="/questionnaire" />
+        {/* Add more boxes */}
+      </SliderBar>
+    </div>
+  </div>
+
+  
+        </div>
   );
 };
 

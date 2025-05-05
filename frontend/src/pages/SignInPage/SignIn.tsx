@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import "./SignIn.css";
-import { FaCheck } from "react-icons/fa";
-import { FaLinkedin } from 'react-icons/fa';
+import { FaCheck as RawFaCheck, FaLinkedin as RawFaLinkedin } from "react-icons/fa";
+import { FaGoogle as RawFaGoogle } from "react-icons/fa6";
+// import { FaCheck } from "react-icons/fa";
+// import { FaLinkedin } from 'react-icons/fa';
 interface SignInProps {
   onSignIn?: (email: string, password: string) => void;
 }
+
+const FaCheck = RawFaCheck as unknown as React.FC;
+const FaLinkedin = RawFaLinkedin as unknown as React.FC;
+const FaGoogle = RawFaGoogle as unknown as React.FC;
 
 const SignIn: React.FC<SignInProps> = ({ onSignIn }) => {
   const [email, setEmail] = useState("");

@@ -156,3 +156,18 @@
   background-color: #888;
   border-radius: 3px;
 }
+
+.announcement-slider {
+  padding: 20px;
+  margin-top: 10px;
+}
+
+.section {
+  margin-top: 40px;
+}
+
+.section h2 {
+  margin-left: 40px;
+  font-size: 24px;
+  color: #1f2937;
+}

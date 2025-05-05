@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import { FaGoogle } from "react-icons/fa6";
-import { FaLinkedin } from 'react-icons/fa';
+// import { FaGoogle } from "react-icons/fa6";
+// import { FaLinkedin } from 'react-icons/fa';
+import { FaCheck as RawFaCheck, FaLinkedin as RawFaLinkedin } from "react-icons/fa";
+import { FaGoogle as RawFaGoogle } from "react-icons/fa6";
 
 interface SignUpProps {
   onSignUp?: (name: string, email: string, password: string) => void;
 }
+
+const FaCheck = RawFaCheck as unknown as React.FC;
+const FaLinkedin = RawFaLinkedin as unknown as React.FC;
+const FaGoogle = RawFaGoogle as unknown as React.FC;
 
 const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
   const [name, setName] = useState("");
@@ -36,7 +42,11 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
         throw new Error(error.message || "Failed to register");
       }
 
-      const data = await response.json();
+      const { token, user } = await response.json();
+      console.log(user);
+      console.log(token);
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
       window.location.href = "/";
     } catch (err: any) {
       alert(err.message);

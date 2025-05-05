@@ -8,13 +8,20 @@ dotenv.config();
 
 @injectable()
 class AuthService {
-    async register(name: string, email: string, password: string, profilePicture?: string) {
+    async register(name: string, email: string, password: string, profilePicture?: string): Promise<{ user: Partial<UserDocument>, token: string}> {
         const existing = await User.findOne({ email });
         if (existing) throw new Error('Email already in use');
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new User({ name, email, password: hashedPassword, profilePicture });
-        return await user.save();
+        const token = jwt.sign(
+            { id: user._id, email: user.email },
+            process.env.JWT_SECRET as string,
+            { expiresIn: process.env.JWT_EXPIRES_IN } as SignOptions
+          );
+        await user.save();
+        const { password: _, ...safeUser } = user.toObject();
+        return { user: safeUser, token };
     }
 
     async login(email: string, password: string): Promise<{ user: Partial<UserDocument>, token: string }> {

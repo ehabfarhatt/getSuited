@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import DataBox from "../../components/Databox/Databox";
-import { FaEdit } from "react-icons/fa";
+// import { FaEdit } from "react-icons/fa";
+import { FaCheck as RawFaCheck, FaLinkedin as RawFaLinkedin, FaEdit as RawFaEdit } from "react-icons/fa";
+import { FaGoogle as RawFaGoogle } from "react-icons/fa6";
 import "./UserProfile.css";
 import { Link, useNavigate } from "react-router-dom";
+
+const FaCheck = RawFaCheck as unknown as React.FC;
+const FaLinkedin = RawFaLinkedin as unknown as React.FC;
+const FaEdit = RawFaEdit as unknown as React.FC<React.SVGProps<SVGSVGElement>>;
+const FaGoogle = RawFaGoogle as unknown as React.FC;
 
 const UserProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -21,28 +28,28 @@ const UserProfile: React.FC = () => {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
       setNameInput(parsedUser.name);
-      fetchInterviews(parsedUser._id);
+      //fetchInterviews(parsedUser._id);
     }
     setLoading(false);
   }, []);
 
-  const fetchInterviews = async (userId: string) => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5001/interviews/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  // const fetchInterviews = async (userId: string) => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const res = await fetch(`http://localhost:5001/interviews/${userId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
 
-      if (!res.ok) throw new Error("Failed to fetch interviews");
+  //     if (!res.ok) throw new Error("Failed to fetch interviews");
 
-      const data = await res.json();
-      setInterviewCount(data.length);
-    } catch (err) {
-      console.error("Error fetching interviews:", err);
-    }
-  };
+  //     const data = await res.json();
+  //     setInterviewCount(data.length);
+  //   } catch (err) {
+  //     console.error("Error fetching interviews:", err);
+  //   }
+  // };
 
   const handleNameUpdate = async () => {
     const token = localStorage.getItem("token");
