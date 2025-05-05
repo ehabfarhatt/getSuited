@@ -15,6 +15,7 @@ import InterviewHome from "./pages/Interview/InterviewHome";
 import Loading from "./components/Loading/Loading";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import UserProfile from "./pages/UserProfile/UserProfile";
+import EvaluationPage from './components/Interview/EvaluationPage'
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
@@ -36,6 +37,7 @@ const App: React.FC = () => {
       <Route path="/oauth-success" element={<OAuthSuccess />} />
       <Route path="/userprofile" element={<UserProfile />} />
       <Route path="/interview" element={<InterviewHome />} />
+      <Route path="/evaluation" element={<EvaluationPage />} />
       {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
