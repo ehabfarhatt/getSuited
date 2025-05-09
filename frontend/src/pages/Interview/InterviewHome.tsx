@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DisclaimerModal from '../../components/Interview/DisclaimerModal';
-import InterviewSetupForm from '../../components/Interview/InterviewSetupForm';
-import StartInterview from '../../components/Interview/BehavioralInterview';
+import InterviewSetupForm from '../../components/Interview/InterviewSetupForm/InterviewSetupForm';
+import StartInterview from '../../components/Interview/BehavioralInterview/BehavioralInterview';
 import TechnicalInterview from '../../components/Interview/TechnicalInterview';
 import { EvaluationResult, InterviewDetails } from '../../type/interview';
+import Navbar from '../../components/Navbar/Navbar';
+
+interface UserData {
+  name: string;
+  profilePicture?: string;
+}
 
 // Inline modal component
 const RegisterPromptModal: React.FC<{ onRedirect: () => void }> = ({ onRedirect }) => (
@@ -51,17 +57,34 @@ const InterviewHome: React.FC = () => {
   const [interviewDetails, setInterviewDetails] = useState<InterviewDetails | null>(null);
   const [results, setResults] = useState<EvaluationResult[]>([]);
   const navigate = useNavigate();
-
-  // Simple localStorage-based check
-  const isUserRegistered = () => {
-    const user = localStorage.getItem('user');
-    return user !== null;
-  };
+  const [user, setUser] = useState<UserData | null>(null);
 
   useEffect(() => {
     if (step === 'registerCheck') {
-      if (isUserRegistered()) {
-        setStep('disclaimer');
+      const token = localStorage.getItem('token');
+  
+      if (token) {
+        fetch("http://localhost:5001/auth/verify", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then(res => {
+            if (res.status === 200) return res.json();
+            throw new Error("Unauthorized");
+          })
+          .then(data => {
+            setUser({
+              name: data.decoded.name,
+              profilePicture: data.decoded.profilePicture,
+            });
+            setStep('disclaimer');
+          })
+          .catch(() => {
+            localStorage.removeItem("token");
+            setStep('registerPrompt');
+          });
       } else {
         setStep('registerPrompt');
       }
@@ -89,6 +112,8 @@ const InterviewHome: React.FC = () => {
 
   return (
     <div>
+      {user && <Navbar user={user} />}
+
       {step === 'registerPrompt' && (
         <RegisterPromptModal onRedirect={() => navigate('/signin')} />
       )}

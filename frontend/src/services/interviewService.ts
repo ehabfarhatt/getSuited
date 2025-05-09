@@ -30,12 +30,13 @@ export const fetchTechnicalQuestions = async (details: InterviewDetails) => {
   const prompt = `
 You are a technical interviewer.
 
-Generate exactly 5 coding interview questions ONLY for a ${details.workType} ${details.position} role at ${details.companyName}.
+Generate exactly 5 interview questions specifically designed to be answered using pseudocode ONLY for a ${details.workType} ${details.position} role at ${details.companyName}.
 It is a ${details.seniority}-level, ${details.workModel} position.
 
-Each question should be:
-- Focused on coding or algorithmic challenges
-- Presented on a single line (no numbering or headings)
+Each question should:
+- Focus on algorithmic or logical challenges (like recursion, loops, conditionals, sorting, searching, etc.)
+- Be phrased clearly to invite a pseudocode-style response
+- Be short, concise, and on a single line (no numbering, no headings)
 
 Respond ONLY with the 5 questions as plain text, each on a new line.
 `;

@@ -6,20 +6,55 @@ interface DisclaimerModalProps {
 
 const DisclaimerModal: React.FC<DisclaimerModalProps> = ({ onAccept }) => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-8 bg-gray-100">
-      <div className="bg-white shadow-lg rounded-2xl p-8 max-w-md text-center">
-        <h2 className="text-2xl font-bold mb-4">Interview Disclaimer</h2>
-        <p className="text-gray-700 mb-6">
-          This feature simulates a real interview experience. 
-          Your camera and microphone will be used to analyze your responses, body language, and tone of voice.
-          Your data will be handled securely and will not be shared.
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      backgroundColor: 'rgba(0,0,0,0.6)',
+      backdropFilter: 'blur(6px)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 1000,
+    }}>
+      <div style={{
+        backgroundColor: 'white',
+        borderRadius: '12px',
+        width: '90%',
+        maxWidth: '600px',
+        maxHeight: '80vh',
+        overflowY: 'auto',
+        padding: '2rem',
+        boxShadow: '0 0 20px rgba(0,0,0,0.2)',
+      }}>
+        <h2 className="text-2xl font-bold mb-4 text-center">Interview Disclaimer</h2>
+        <p className="text-gray-700 mb-6 text-sm leading-relaxed">
+          Welcome to the getSuited AI Interview Simulation. This feature is designed to provide a comprehensive and realistic interview experience. Please read the following carefully before proceeding:
+          <br /><br />
+          1. You will be guided through a series of behavioral and technical interview questions based on your role selection.
+          <br />
+          2. Your <strong>webcam</strong> and <strong>microphone</strong> will be used to analyze facial expressions, body language, speaking tone, and vocal emotion.
+          <br />
+          3. Each behavioral answer is recorded and processed with AI to evaluate your confidence, emotional consistency, and non-verbal cues.
+          <br />
+          4. Each technical question must be answered using <strong>pseudocode only</strong>. The system will evaluate logical correctness, not programming syntax.
+          <br />
+          5. AI-generated feedback will be provided at the end, combining behavioral and technical evaluation results.
+          <br />
+          6. Your interview performance is not shared externally and is only stored temporarily for session-based analysis.
+          <br /><br />
+          By clicking "I Agree," you consent to the use of your camera and microphone for the purposes outlined above and agree to proceed with the simulated interview.
         </p>
-        <button 
-          onClick={onAccept}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl"
-        >
-          I Agree, Proceed
-        </button>
+        <div className="text-center">
+          <button
+            onClick={onAccept}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-xl mt-4"
+          >
+            I Agree, Proceed
+          </button>
+        </div>
       </div>
     </div>
   );
