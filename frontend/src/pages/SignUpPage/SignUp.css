@@ -1,0 +1,189 @@
+/* Background gradient similar to SignIn */
+.signup-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
+  }
+  
+  /* Main card styling */
+  .signup-card {
+    width: 350px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .signup-card h2 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .sub-header {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    color: #555;
+  }
+  
+  .sub-header a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* Form groups */
+  .input-group {
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  
+  /* Password wrapper for toggling show/hide */
+  .password-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.2rem 0.5rem;
+  }
+  
+  .password-wrapper input {
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 0.7rem 0.5rem;
+  }
+  
+  .password-wrapper span {
+    cursor: pointer;
+    color: #999;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+  }
+  
+  /* Sign Up button */
+  .signup-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #ccc;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    transition: background 0.3s;
+  }
+  
+  .signup-btn:hover {
+    background: #aaa;
+  }
+  
+  /* Social buttons container */
+  .social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .social-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .social-btn:hover {
+    background: #f1f1f1;
+  }
+  
+  /* SSO sign up button */
+  .sso-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 1rem;
+  }
+  
+  .sso-btn:hover {
+    background: #f9f9f9;
+  }
+  
+  /* Lock icon for SSO button */
+  .lock-icon {
+    font-size: 1.1rem;
+  }
+  
+  .social-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .google-btn {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+  }
+  
+  .google-btn:hover {
+    background-color: #f5f5f5;
+  }
+
+  .linkedin-btn {
+    background-color: #0077b5;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .linkedin-btn:hover {
+    background-color: #005f90;
+  }

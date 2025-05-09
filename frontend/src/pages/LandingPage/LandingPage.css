@@ -1,0 +1,173 @@
+/* Full-page gradient background to match SignIn/SignUp style */
+.landing-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+/* The hero section sits below the navbar */
+.hero-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  color: #ffffff;
+  padding: 3rem 1rem;
+}
+
+/* Main title text */
+.hero-section h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+/* A short paragraph / tagline */
+.hero-tagline {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+/* Wrapper for action buttons or links */
+.hero-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Profile button for signed-in users */
+.profile-button {
+  display: flex;
+  align-items: center;
+  border: 2px solid #fff;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  color: #fff;
+  text-decoration: none;
+}
+
+.profile-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  border: 2px solid white;
+}
+
+.default-profile-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.profile-name {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Sign in link */
+.secondary-link {
+  color: #ffffff;
+  text-decoration: underline;
+  font-size: 1rem;
+}
+
+/* Platform features section */
+.features-section {
+  margin-top: 2rem;
+  color: #fff;
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 400px;
+  font-size: 1.2rem;
+  line-height: 2;
+}
+
+.courses-section {
+  padding: 40px 40px 20px;
+}
+
+.welcome-heading {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #1f2937;
+  text-align: left;
+}
+
+.see-all-btn {
+  background-color: #1f73b7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.see-all-btn:hover {
+  background-color: #155a99;
+}
+
+.horizontal-courses-scroll {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  scroll-behavior: smooth;
+}
+
+.horizontal-courses-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.horizontal-courses-scroll::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 3px;
+}
+
+.announcement-slider {
+  padding: 20px;
+  margin-top: 10px;
+}
+
+.section {
+  margin-top: 40px;
+}
+
+.section h2 {
+  margin-left: 40px;
+  font-size: 24px;
+  color: #1f2937;
+}
