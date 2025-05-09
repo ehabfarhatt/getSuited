@@ -4,7 +4,7 @@ const QuestionSchema = new mongoose.Schema({
     question: { type: String, required: true },
     options: { type: [String], required: true },
     correctAnswer: { type: String, required: true },
-    category: { type: String, required: true },
+    field: { type: String, required: true },
 });
 
 const Questionnaire = mongoose.model('Questionnaire', QuestionSchema);
