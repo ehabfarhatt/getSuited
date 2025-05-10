@@ -1,7 +1,9 @@
-// pages/CourseDetails.tsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-export {}; // ensures it's treated as a module
+import Navbar from "../../components/Navbar/Navbar";
+import LeftSideBar from "../../components/LeftSideBar/LeftSideBar";
+import "./CourseDetails.css";
+
 interface Course {
   _id: string;
   Title: string;
@@ -23,11 +25,44 @@ const CourseDetails: React.FC = () => {
   if (!course) return <div>Loading...</div>;
 
   return (
-    <div style={{ padding: "40px" }}>
-      <h1>{course.Title}</h1>
-      <p><strong>Description:</strong> {course.Description}</p>
-      <p><strong>Category:</strong> {course.Category}</p>
-    </div>
+    <>
+      <Navbar />
+      <div className="course-details-layout">
+        <LeftSideBar courseTitle={course.Title} />
+        <div className="course-details-content">
+          <h1 className="course-title">{course.Title}</h1>
+          <p><strong>Description:</strong> {course.Description}</p>
+          <p><strong>Category:</strong> {course.Category}</p>
+
+          <div className="video-container" id="video">
+            <iframe
+              src="https://www.youtube.com/embed/kfcLqs1ISjk"
+              title="Course Preview"
+              allowFullScreen
+            ></iframe>
+          </div>
+
+          <div className="course-extra-info" id="learn">
+            <h3>What you'll learn</h3>
+            <ul>
+              <li>Understand SDLC and Agile methodologies</li>
+              <li>Master Git and GitHub</li>
+              <li>Build and test scalable software systems</li>
+              <li>Learn software engineering best practices</li>
+            </ul>
+
+            <h3 id="contents">Course Contents</h3>
+            <ol>
+              <li>Intro to Software Engineering</li>
+              <li>Agile vs Waterfall</li>
+              <li>Git Basics</li>
+              <li>Unit Testing</li>
+              <li>Project Showcase</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -6,6 +6,7 @@ import SliderBar from "../../components/SlideBar/SliderBar";
 import { useNavigate } from "react-router-dom";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 
+
 interface UserData {
   name: string;
   profilePicture?: string;
@@ -59,58 +60,83 @@ const LandingPage: React.FC = () => {
 
       {/* Announcement Image Slider */}
   <div className="announcement-slider">
-    <ImageSlider
-      images={[
-        { src: "/images/slide1.jpg", link: "/announcement/1" },
-        { src: "/images/slide2.jpg", link: "/announcement/2" },
-        // Add more slides
-      ]}
-    />
+  <ImageSlider
+  images={[
+    {
+      src: require("../../assets/codeBack.jpg"),
+      heading: "Ready to Take an Interview?",
+      buttonText: "Start Interview",
+      link: "/interview",
+    },
+    {
+      src: require("../../assets/codingLaptop.jpg"),
+      heading: "Train with our AI Chatbot!",
+      buttonText: "Take me!",
+      link: "/training",
+    },
+  ]}
+/>
+
+
   </div>
 
   <div className="landing-body">
 
     {/* Featured Courses */}
-    <div className="section">
-      <h2>Featured Courses</h2>
-      <SliderBar>
-        {courses.map(course => (
-          <div key={course._id} onClick={() => navigate(`/courses/${course._id}`)}>
-            <Recdatabox
-              header={course.Title}
-              data={[
-                { label: "Description", value: course.Description },
-                { label: "Category", value: course.Category },
-              ]}
-              footerText="View Course"
-              footerLink="#"
-            />
+<div className="section">
+  <h2>Featured Courses</h2>
+  <SliderBar>
+    <div className="course-slider-wrapper">
+      {courses.map((course, i) => (
+        <div
+          key={course._id}
+          className="recdatabox fade-in"
+          onClick={() => navigate(`/courses/${course._id}`)}
+          style={{ animationDelay: `${i * 0.1}s` }}
+        >
+          <div className="recdatabox-content">
+            <h3>{course.Title}</h3>
+            <p className="recdatabox-description">{course.Description}</p>
+            <div className="recdatabox-meta">
+              <span className="label">Category:</span>
+              <span className="value">{course.Category}</span>
+            </div>
           </div>
-        ))}
-      </SliderBar>
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <button className="see-all-btn" onClick={() => navigate("/courses")}>
-              See All
-            </button>
-          </div>
+          <div className="recdatabox-footer">View Course →</div>
+        </div>
+      ))}
     </div>
+  </SliderBar>
+  <div style={{ textAlign: "center", marginTop: "20px" }}>
+    <button className="see-all-btn" onClick={() => navigate("/courses")}>
+      See All
+    </button>
+  </div>
+</div>
+
 
     {/* Interview Section */}
     <div className="section">
       <h2>Interview Practice</h2>
       <SliderBar>
-        <Recdatabox header="Technical Interview" data={[{ label: "Type", value: "Coding" }]} footerText="Start" footerLink="/interview/technical" />
-        <Recdatabox header="Behavioral Interview" data={[{ label: "Type", value: "Soft Skills" }]} footerText="Start" footerLink="/interview/behavioral" />
-      </SliderBar>
+  <div className="interview-slider-wrapper">
+    <Recdatabox header="Technical Interview" data={[{ label: "Type", value: "Coding" }]} footerText="Start" footerLink="/interview/technical" />
+    <Recdatabox header="Behavioral Interview" data={[{ label: "Type", value: "Soft Skills" }]} footerText="Start" footerLink="/interview/behavioral" />
+  </div>
+</SliderBar>
+
     </div>
 
     {/* Questionnaire Section */}
     <div className="section">
       <h2>Questionnaire</h2>
       <SliderBar>
-        <Recdatabox header="Skill Assessment" data={[{ label: "Level", value: "Beginner" }]} footerText="Take Test" footerLink="/questionnaire" />
-        {/* Add more boxes */}
-      </SliderBar>
+  <div className="questionnaire-slider-wrapper">
+    <Recdatabox header="Skill Assessment" data={[{ label: "Level", value: "Beginner" }]} footerText="Take Test" footerLink="/questionnaire" />
+    {/* Add more boxes if needed */}
+  </div>
+</SliderBar>
+
     </div>
   </div>
 

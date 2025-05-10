@@ -1,41 +1,43 @@
-// src/components/ImageSlider/ImageSlider.tsx
 import React, { useEffect, useState } from "react";
-import "./ImageSlider.css";
 import { useNavigate } from "react-router-dom";
+import "./ImageSlider.css";
 
-interface Slide {
+interface ImageSlide {
   src: string;
+  heading: string;
+  buttonText: string;
   link: string;
-  alt?: string;
 }
 
-interface ImageSliderProps {
-  images: Slide[];
-  autoSlideInterval?: number;
+interface Props {
+  images: ImageSlide[];
 }
 
-const ImageSlider: React.FC<ImageSliderProps> = ({ images, autoSlideInterval = 2000 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const ImageSlider: React.FC<Props> = ({ images }) => {
+  const [current, setCurrent] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % images.length);
-    }, autoSlideInterval);
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 5000);
     return () => clearInterval(interval);
-  }, [images.length, autoSlideInterval]);
-
-  const handleClick = () => {
-    navigate(images[currentIndex].link);
-  };
+  }, [images.length]);
 
   return (
-    <div className="image-slider" onClick={handleClick}>
-      <img
-        src={images[currentIndex].src}
-        alt={images[currentIndex].alt || "Slide"}
-        className="slide-image"
-      />
+    <div className="slider-container">
+      {images.map((img, index) => (
+        <div
+          key={index}
+          className={`slide ${index === current ? "active" : ""}`}
+        >
+          <img src={img.src} alt={`Slide ${index}`} />
+          <div className="overlay">
+            <h2>{img.heading}</h2>
+            <button onClick={() => navigate(img.link)}>{img.buttonText}</button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
