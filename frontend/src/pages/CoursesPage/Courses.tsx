@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Recdatabox from "../../components/Recdatabox/Recdatabox";
 import Navbar from "../../components/Navbar/Navbar";
-import "./Courses.css"; // create this CSS if you don’t have one
+import "./Courses.css";
 
 interface Course {
   _id: string;
@@ -30,6 +30,8 @@ const Courses: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [user, setUser] = useState<UserData | null>(null);
   const [step, setStep] = useState<'checking' | 'prompt' | 'allowed'>('checking');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,10 +68,22 @@ const Courses: React.FC = () => {
     }
   }, []);
 
+  const allCategories = ["All", ...Array.from(new Set(courses.map(c => c.Category)))];
+
+  const filteredCourses = selectedCategory === "All"
+    ? courses
+    : courses.filter(course => course.Category === selectedCategory);
+
+  const groupedCourses = filteredCourses.reduce((acc, course) => {
+    if (!acc[course.Category]) acc[course.Category] = [];
+    acc[course.Category].push(course);
+    return acc;
+  }, {} as Record<string, Course[]>);
+
   return (
     <div className="courses-page">
       <Navbar user={user} />
-      
+
       {step === 'prompt' && (
         <RegisterPromptModal onRedirect={() => navigate('/signin')} />
       )}
@@ -77,21 +91,51 @@ const Courses: React.FC = () => {
       {step === 'allowed' && (
         <div className="courses-container">
           <h1 className="courses-heading">Featured Courses</h1>
-          <div className="horizontal-courses-scroll">
-            {courses.map(course => (
-              <div key={course._id} onClick={() => navigate(`/courses/${course._id}`)}>
-                <Recdatabox
-                  header={course.Title}
-                  data={[
-                    { label: "Description", value: course.Description },
-                    { label: "Category", value: course.Category },
-                  ]}
-                  footerText="View Course"
-                  footerLink="#"
-                />
-              </div>
+
+          {/* Category Tabs */}
+          <div className="category-tabs">
+            {allCategories.map((category) => (
+              <button
+                key={category}
+                className={`category-tab ${selectedCategory === category ? "active" : ""}`}
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </button>
             ))}
           </div>
+
+          {Object.entries(groupedCourses).map(([category, group], index) => (
+            <div
+              key={category}
+              className="category-group"
+              style={{ animationDelay: `${index * 0.2}s` }}
+            >
+              <h2 className="category-title">{category}</h2>
+              <div className="horizontal-courses-scroll">
+              {group.map((course, i) => (
+                <div
+                  key={course._id}
+                  onClick={() => navigate(`/courses/${course._id}`)}
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                  className="recdatabox fade-in"
+                >
+                  <div className="recdatabox-content">
+                    <h3>{course.Title}</h3>
+                    <p className="recdatabox-description">{course.Description}</p>
+                    <div className="recdatabox-meta">
+                      <span className="label">Category:</span>
+                      <span className="value">{course.Category}</span>
+                    </div>
+                  </div>
+                  <div className="recdatabox-footer">
+                    View Course →
+                  </div>
+                </div>
+              ))}
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

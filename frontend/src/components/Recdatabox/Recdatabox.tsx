@@ -16,12 +16,13 @@ const Recdatabox: React.FC<RecdataboxProps> = ({ header, data, footerText, foote
     <div className="recdatabox">
       <div className="recdatabox-header">{header}</div>
       <div className="recdatabox-content">
-        {data.map((item, index) => (
-          <div className="recdatabox-item" key={index}>
-            <span>{item.label}</span>
-            <div className="recdatabox-item-value">{item.value}</div>
-          </div>
-        ))}
+      {data.map((item, index) => (
+  <div className="recdatabox-item" key={index}>
+    <span className="label">{item.label}</span>
+    <span className="value">{item.value}</span>
+  </div>
+))}
+
       </div>
       <div className="recdatabox-footer">
         <a href={footerLink}>{footerText} →</a>
@@ -29,5 +30,6 @@ const Recdatabox: React.FC<RecdataboxProps> = ({ header, data, footerText, foote
     </div>
   );
 };
+
 
 export default Recdatabox;
