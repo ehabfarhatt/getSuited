@@ -426,41 +426,35 @@ function stddev(values: number[]): number {
   
   return (
     <div className="start-interview-container">
-      {countdown > 0 ? (
-        <div className="countdown">{countdown}</div>
-      ) : (
-        <div className="interview-layout">
-          <div className="video-section">
-            <h2 className="question-heading">
-              {questions.length > 0 ? `Question ${currentQuestionIndex + 1}:` : 'Loading...'}
-            </h2>
-            <p className="question-text">{questions[currentQuestionIndex]}</p>
-  
-            <video
-              ref={videoRef}
-              className="video-box"
-              autoPlay
-              muted
-            />
-  
-            <button
-              onClick={moveToNextQuestion}
-              className="next-btn"
-            >
-              Next Question
-            </button>
-          </div>
-  
-          <div className="ai-voice-wave">
-            <div className="bar"></div>
-            <div className="bar"></div>
-            <div className="bar"></div>
-            <div className="bar"></div>
-            <div className="bar"></div>
-          </div>
-        </div>
-      )}
+  {countdown > 0 ? (
+    <div className="countdown">{countdown}</div>
+  ) : (
+    <div className="interview-layout">
+      {/* Video Section */}
+      <div className="video-section">
+        <h2 className="question-heading">
+          {questions.length > 0 ? `Question ${currentQuestionIndex + 1}:` : 'Loading...'}
+        </h2>
+        <p className="question-text">{questions[currentQuestionIndex]}</p>
+
+        <video ref={videoRef} className="video-box" autoPlay muted />
+
+        <button onClick={moveToNextQuestion} className="next-btn">
+          Next Question
+        </button>
+      </div>
+
+      {/* AI Voice Wavelength Section */}
+      <div className="ai-voice-wave">
+        <div className="bar"></div>
+        <div className="bar"></div>
+        <div className="bar"></div>
+        <div className="bar"></div>
+        <div className="bar"></div>
+      </div>
     </div>
+  )}
+</div>
   );
 };
 

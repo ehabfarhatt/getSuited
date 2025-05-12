@@ -9,6 +9,7 @@ import Navbar from '../../components/Navbar/Navbar';
 
 interface UserData {
   name: string;
+  email: string;  // Added email field
   profilePicture?: string;
 }
 
@@ -77,6 +78,7 @@ const InterviewHome: React.FC = () => {
           .then(data => {
             setUser({
               name: data.decoded.name,
+              email: data.decoded.email,  // Save the user's email
               profilePicture: data.decoded.profilePicture,
             });
             setStep('disclaimer');

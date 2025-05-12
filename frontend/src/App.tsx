@@ -12,13 +12,13 @@ import CourseDetails from "./pages/CourseDetailsPage/CourseDetails";
 import Courses from "./pages/CoursesPage/Courses";
 import OAuthSuccess from "./pages/OAuthSuccess";
 import InterviewHome from "./pages/Interview/InterviewHome";
-// import Dashboard from "./pages/DashboardPage/Dashboard"; // Uncomment when ready
+import TrainingChatbot from "./pages/TrainingChatbot/TrainingChatbot";
 
 // Components
 import Loading from "./components/Loading/Loading";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import UserProfile from "./pages/UserProfile/UserProfile";
-import EvaluationPage from "./components/Interview/EvaluationPage";
+import EvaluationPage from "./components/Interview/EvaluationPage/EvaluationPage";
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -42,6 +42,7 @@ const App: React.FC = () => {
       <Route path="/userprofile" element={<UserProfile />} />
       <Route path="/interview" element={<InterviewHome />} />
       <Route path="/evaluation" element={<EvaluationPage />} />
+      <Route path="/training" element={<TrainingChatbot/>} />
       {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

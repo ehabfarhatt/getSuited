@@ -1,5 +1,6 @@
 /* StartInterview.css */
 
+/* Full screen container */
 .start-interview-container {
     display: flex;
     flex-direction: column;
@@ -9,21 +10,23 @@
     background: linear-gradient(to bottom right, #f0f4f8, #dfe6ed);
     padding: 2rem;
     font-family: 'Segoe UI', sans-serif;
-  }
-  
-  .countdown {
+}
+
+/* Countdown timer styling */
+.countdown {
     font-size: 5rem;
     font-weight: 800;
     color: #2563eb;
     animation: pulse 1s ease-in-out infinite;
-  }
-  
-  @keyframes pulse {
+}
+
+@keyframes pulse {
     0%, 100% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.1); opacity: 0.7; }
-  }
-  
-  .interview-layout {
+}
+
+/* Layout of video and voice wave */
+.interview-layout {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -31,25 +34,28 @@
     gap: 3rem;
     width: 100%;
     max-width: 1200px;
-  }
-  
-  .video-section {
+}
+
+/* Video section styling */
+.video-section {
     flex: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  
-  .video-box {
+}
+
+/* Video player styling */
+.video-box {
     width: 100%;
     max-width: 600px;
     border-radius: 1rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     background: #fff;
-  }
-  
-  .ai-voice-wave {
+}
+
+/* AI Voice Wavelength section */
+.ai-voice-wave {
     flex: 1;
     min-height: 300px;
     background: #f0f8ff;
@@ -59,30 +65,34 @@
     align-items: center;
     justify-content: center;
     position: relative;
-  }
-  
-  .ai-voice-wave::before {
+    width: 100%;
+    margin-top: 20px; /* Space between question/video and waveform */
+}
+
+/* Wavelength animation styling */
+.ai-voice-wave::before {
     content: "";
     width: 80%;
     height: 50px;
     background: repeating-linear-gradient(
-      90deg,
-      #3b82f6 0px,
-      #3b82f6 3px,
-      transparent 3px,
-      transparent 6px
+        90deg,
+        #3b82f6 0px,
+        #3b82f6 3px,
+        transparent 3px,
+        transparent 6px
     );
     animation: wave 1.5s linear infinite;
     display: block;
     opacity: 0.6;
-  }
-  
-  @keyframes wave {
+}
+
+@keyframes wave {
     0% { background-position: 0 0; }
     100% { background-position: 100% 0; }
-  }
-  
-  .next-btn {
+}
+
+/* Next button styling */
+.next-btn {
     margin-top: 2rem;
     padding: 1rem 2rem;
     font-size: 1.2rem;
@@ -93,24 +103,24 @@
     border-radius: 0.75rem;
     cursor: pointer;
     transition: background 0.3s ease;
-  }
-  
-  .next-btn:hover {
+}
+
+.next-btn:hover {
     background: #1d4ed8;
-  }
-  
-  .question-heading {
+}
+
+/* Question Heading and Text Styling */
+.question-heading {
     font-size: 1.75rem;
     color: #1e293b;
     margin-bottom: 1rem;
     text-align: center;
-  }
-  
-  .question-text {
+}
+
+.question-text {
     font-size: 1.2rem;
     color: #334155;
     margin-bottom: 2rem;
     text-align: center;
     max-width: 600px;
-  }
-  
+}
