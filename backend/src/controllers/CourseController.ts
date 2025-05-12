@@ -11,12 +11,26 @@ export default class CourseController {
 
     @httpPost('/add', authenticateJWT)
     public async createCourse(
-        @requestBody() body: { title: string; description: string; price?: number },
+        @requestBody() body: {
+            title: string;
+            description: string;
+            price?: number;
+            youtubeUrl?: string;
+            bookLink?: string;
+            content?: string;
+        },
         @response() res: Response
     ): Promise<void> {
         try {
-            const course = await this.courseService.createCourse(body.title, body.description, body.price);
-            res.status(201).json(course);
+            const course = await this.courseService.createCourse(
+                body.title,
+                body.description,
+                body.price,
+                body.youtubeUrl,
+                body.bookLink,
+                body.content
+            );
+            res.status(201).json(course);  // Return the newly created course data
         } catch (error) {
             res.status(500).json({ error: (error as Error).message });
         }
@@ -26,7 +40,7 @@ export default class CourseController {
     public async getAllCourses(@response() res: Response): Promise<void> {
         try {
             const courses = await this.courseService.getAllCourses();
-            res.json(courses);
+            res.json(courses);  // Return all courses
         } catch (error) {
             res.status(500).json({ error: (error as Error).message });
         }
@@ -43,7 +57,7 @@ export default class CourseController {
                 res.status(404).json({ error: 'Course not found' });
                 return;
             }
-            res.json(course);
+            res.json(course);  // Return course by ID
         } catch (error) {
             res.status(500).json({ error: (error as Error).message });
         }

@@ -1,31 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
+// Global styles
+import "./App.css";
+
 // Pages
 import LandingPage from "./pages/LandingPage/LandingPage";
 import SignIn from "./pages/SignInPage/SignIn";
 import SignUp from "./pages/SignUpPage/SignUp";
 import CourseDetails from "./pages/CourseDetailsPage/CourseDetails";
 import Courses from "./pages/CoursesPage/Courses";
-import OAuthSuccess from './pages/OAuthSuccess';
+import OAuthSuccess from "./pages/OAuthSuccess";
 import InterviewHome from "./pages/Interview/InterviewHome";
-//import Dashboard from "./pages/DashboardPage/Dashboard"; // Create this page to hold dashboard logic
+// import Dashboard from "./pages/DashboardPage/Dashboard"; // Uncomment when ready
 
 // Components
 import Loading from "./components/Loading/Loading";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import UserProfile from "./pages/UserProfile/UserProfile";
-import EvaluationPage from './components/Interview/EvaluationPage'
+import EvaluationPage from "./components/Interview/EvaluationPage";
+
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setLoading(false), 2000); // 2 seconds
-
+    const timeout = setTimeout(() => setLoading(false), 2000); // 2s loader
     return () => clearTimeout(timeout);
   }, []);
 
   if (loading) return <Loading />;
+
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
