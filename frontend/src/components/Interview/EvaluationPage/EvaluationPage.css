@@ -1,0 +1,20 @@
+/* EvaluationPage.css */
+.evaluation-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .generate-pdf-btn, .send-email-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .generate-pdf-btn:hover, .send-email-btn:hover {
+    background-color: #45a049;
+  }

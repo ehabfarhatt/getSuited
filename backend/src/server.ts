@@ -20,6 +20,8 @@ import './controllers/QuestionnaireController';
 import './controllers/GoogleAuthController';
 import './controllers/LinkedInAuthController';
 import './controllers/InterviewControllerAPI';
+import './controllers/TrainingController'
+import './controllers/emailController';
 
 dotenv.config();
 connectDB();
