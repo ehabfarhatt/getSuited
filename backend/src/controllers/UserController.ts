@@ -34,6 +34,39 @@ export default class UserController {
     res.json(await this.userService.getAllUsers());
   }
 
+  @httpGet('/evaluations')
+async getEvaluationsByEmail(@request() req: Request, @response() res: Response) {
+  const { email } = req.query;
+  if (!email) return res.status(400).json({ error: "Email is required" });
+
+  const user = await this.userService.getUserByEmail(email as string);
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  res.json(user.evaluations);
+}
+
+  @httpPost('/upload-evaluation', authenticateJWT, upload.single('file'))
+async uploadEvaluation(@request() req: Request, @response() res: Response) {
+  try {
+    const { email, name } = req.body;
+    const file = req.file;
+
+    if (!file) return res.status(400).json({ error: 'No file uploaded' });
+    if (!email && !name) return res.status(400).json({ error: 'Email or name required' });
+
+    const fileUrl = (file as any).location;
+    const fileName = file.originalname;
+
+    const user = await this.userService.addEvaluationByIdentifier({ email, name }, fileName, fileUrl);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    res.json({ message: 'Evaluation uploaded successfully', user });
+  } catch (err: any) {
+    console.error('Upload error:', err);
+    res.status(500).json({ error: err.message });
+  }
+}
+
   @httpGet('/:id')
   async getById(@request() req: Request, @response() res: Response) {
     const user = await this.userService.getUserById(req.params.id);

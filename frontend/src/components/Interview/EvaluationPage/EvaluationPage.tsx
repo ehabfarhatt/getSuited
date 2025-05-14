@@ -58,6 +58,12 @@ const EvaluationPage: React.FC = () => {
     }
   }, [navigate]);
 
+  useEffect(() => {
+  if (user) {
+    uploadPDFToDB();
+  }
+}, [user]);
+
   if (!results || !Array.isArray(results)) {
     navigate('/');
     return null;
@@ -159,6 +165,22 @@ const generatePDF = () => {
 
   // Return the PDF as a Blob
   return doc.output('blob');
+};
+
+const uploadPDFToDB = async () => {
+  const pdfBlob = generatePDF();
+  const formData = new FormData();
+
+  formData.append('file', pdfBlob, 'interview_evaluation.pdf');
+  formData.append('email', user?.email || ''); // or use name if needed
+
+  await fetch(`http://localhost:5001/users/upload-evaluation`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: formData,
+  });
 };
 
   // Function to send the PDF via email

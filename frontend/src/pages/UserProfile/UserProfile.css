@@ -140,3 +140,31 @@
     transform: rotate(360deg);
   }
 }
+
+.evaluation-section {
+  margin-top: 20px;
+  background: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.section-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.evaluation-list {
+  list-style: none;
+  padding: 0;
+}
+
+.pdf-link {
+  color: #0066cc;
+  text-decoration: none;
+  display: block;
+  padding: 5px 0;
+}
+
+.pdf-link:hover {
+  text-decoration: underline;
+}

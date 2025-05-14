@@ -37,4 +37,26 @@ export default class UserService {
     }
     return user;
   }
+
+  getUserByEmail(email: string) {
+  return User.findOne({ email }).select('evaluations');
+}
+
+  async addEvaluationByIdentifier(
+  identifier: { email?: string; name?: string },
+  fileName: string,
+  fileUrl: string
+) {
+  const user = await User.findOne({
+    ...(identifier.email ? { email: identifier.email } : {}),
+    ...(identifier.name && !identifier.email ? { name: identifier.name } : {}),
+  });
+
+  if (!user) throw new Error('User not found');
+
+  user.evaluations.push({ fileName, fileUrl });
+  await user.save();
+
+  return user;
+}
 }

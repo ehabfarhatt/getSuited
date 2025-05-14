@@ -1,5 +1,12 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+export interface Evaluation {
+  fileName: string;
+  fileUrl: string;
+  createdAt?: Date;
+}
+
+
 export interface UserDocument extends Document {
   name: string;
   email: string;
@@ -7,6 +14,7 @@ export interface UserDocument extends Document {
   profilePicture?: string;
   score: number;
   createdAt?: Date;
+  evaluations: Evaluation[];
 }
 
 const UserSchema = new Schema<UserDocument>({
@@ -16,6 +24,11 @@ const UserSchema = new Schema<UserDocument>({
   profilePicture: { type: String, default: 'default.jpg' },
   score: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
+  evaluations: [{
+    fileName: { type: String, required: true },
+    fileUrl: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+  }],
 });
 
 export default mongoose.model<UserDocument>('User', UserSchema);

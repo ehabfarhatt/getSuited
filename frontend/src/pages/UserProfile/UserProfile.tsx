@@ -19,6 +19,7 @@ const UserProfile: React.FC = () => {
   const [nameInput, setNameInput] = useState("");
   const [interviewCount, setInterviewCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
+  const [evaluations, setEvaluations] = useState<any[]>([]);
 
   const navigate = useNavigate();
 
@@ -32,6 +33,33 @@ const UserProfile: React.FC = () => {
     }
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+  const fetchEvaluations = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await fetch(
+        `http://localhost:5001/users/evaluations?email=${user.email}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to fetch evaluations");
+      const data = await res.json();
+      setEvaluations(data);
+    } catch (err) {
+      console.error("Error fetching evaluations:", err);
+    }
+  };
+
+  if (user?.email) {
+    fetchEvaluations();
+  }
+}, [user]);
 
   // const fetchInterviews = async (userId: string) => {
   //   try {
@@ -197,6 +225,29 @@ const UserProfile: React.FC = () => {
             data={[{ label: "Score", value: user.score || 0 }]}
             footerText="View More"
             footerLink="/progress"
+          />
+                  <DataBox
+            header="Evaluation Reports"
+            data={
+              evaluations.length > 0
+                ? evaluations.map((evalItem, index) => ({
+                    label: evalItem.fileName || `Evaluation ${index + 1}`,
+                    value: (
+                      <a
+                        href={evalItem.fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pdf-link"
+                        style={{ color: '#0066cc', textDecoration: 'underline' }}
+                      >
+                        View
+                      </a>
+                    ),
+                  }))
+                : [{ label: 'No reports yet', value: '-' }]
+            }
+            footerText="Upload More"
+            footerLink="/interview"
           />
           <DataBox
             header="Interviews"
