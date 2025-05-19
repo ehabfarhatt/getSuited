@@ -65,6 +65,9 @@ type BodyLanguageMetrics = {
   const faceDataRef = useRef<FaceFrame[]>([]);
     const faceIntervalRef = useRef<NodeJS.Timeout | null>(null);
     const audioStreamRef = useRef<MediaStream | null>(null);
+    const [audioLevelBars, setAudioLevelBars] = useState<number[]>([0, 0, 0, 0, 0]);
+const analyserRef = useRef<AnalyserNode | null>(null);
+const audioCtxRef = useRef<AudioContext | null>(null);
 
 
 function stddev(values: number[]): number {
@@ -307,9 +310,53 @@ function stddev(values: number[]): number {
     window.speechSynthesis.speak(utterance);
   };
 
+  const visualise = () => {
+    if (!analyserRef.current) return;
+  
+    const bufferLength = analyserRef.current.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+  
+    const draw = () => {
+      analyserRef.current!.getByteFrequencyData(dataArray);
+      // crude volume = average of first ~64 bins
+      const slice = dataArray.slice(0, 64);
+      const avg = slice.reduce((s, v) => s + v, 0) / slice.length;
+  
+      // map avg [0..255] → height [0..1]
+      const level = Math.min(avg / 255, 1);
+  
+      // build 5 bars with slight random jitter so they differ
+      setAudioLevelBars([
+        level,
+        level * 0.8 + Math.random() * 0.1,
+        level * 0.6 + Math.random() * 0.15,
+        level * 0.8 + Math.random() * 0.05,
+        level * 0.9 + Math.random() * 0.1,
+      ]);
+  
+      requestAnimationFrame(draw);
+    };
+    draw();
+  };
+  
+
   const startRecording = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    audioStreamRef.current = stream; // Save audio stream for later cleanup
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+  audioStreamRef.current = stream;
+
+  /* ===== visualiser setup ===== */
+  const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+  const audioCtx = new AudioContext();
+  audioCtxRef.current = audioCtx;
+
+  const source = audioCtx.createMediaStreamSource(stream);
+  const analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  analyserRef.current = analyser;
+
+  source.connect(analyser);
+
+  visualise();  
   
     const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
   
@@ -444,14 +491,6 @@ function stddev(values: number[]): number {
         </button>
       </div>
 
-      {/* AI Voice Wavelength Section */}
-      <div className="ai-voice-wave">
-        <div className="bar"></div>
-        <div className="bar"></div>
-        <div className="bar"></div>
-        <div className="bar"></div>
-        <div className="bar"></div>
-      </div>
     </div>
   )}
 </div>
