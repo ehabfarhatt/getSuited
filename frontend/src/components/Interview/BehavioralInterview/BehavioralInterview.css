@@ -56,18 +56,21 @@
 
 /* AI Voice Wavelength section */
 .ai-voice-wave {
-    flex: 1;
-    min-height: 300px;
-    background: #f0f8ff;
-    border-radius: 1rem;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-    margin-top: 20px; /* Space between question/video and waveform */
-}
+    align-items: flex-end;
+    height: 50px;
+    gap: 6px;
+    margin-top: 1.5rem;
+  }
+
+  .bar {
+    width: 6px;
+    background: linear-gradient(180deg, #28c76f 0%, #1b8d55 100%);
+    border-radius: 3px;
+    transform-origin: bottom;
+    transition: transform 0.07s ease;
+  }
+  
 
 /* Wavelength animation styling */
 .ai-voice-wave::before {
