@@ -4,7 +4,7 @@ const TYPES = {
     InterviewService: Symbol.for('InterviewService'),
     QuestionnaireService: Symbol.for('QuestionnaireService'),
     AuthService: Symbol.for('AuthService'),
-    EmailService: Symbol.for('EmailService'),  // Ensure EmailService is defined here
+    EmailService: Symbol.for('EmailService'), 
 };
 
 export default TYPES;

@@ -30,7 +30,7 @@ export default class CourseController {
                 body.bookLink,
                 body.content
             );
-            res.status(201).json(course);  // Return the newly created course data
+            res.status(201).json(course); 
         } catch (error) {
             res.status(500).json({ error: (error as Error).message });
         }
@@ -40,7 +40,7 @@ export default class CourseController {
     public async getAllCourses(@response() res: Response): Promise<void> {
         try {
             const courses = await this.courseService.getAllCourses();
-            res.json(courses);  // Return all courses
+            res.json(courses); 
         } catch (error) {
             res.status(500).json({ error: (error as Error).message });
         }
@@ -57,7 +57,7 @@ export default class CourseController {
                 res.status(404).json({ error: 'Course not found' });
                 return;
             }
-            res.json(course);  // Return course by ID
+            res.json(course); 
         } catch (error) {
             res.status(500).json({ error: (error as Error).message });
         }

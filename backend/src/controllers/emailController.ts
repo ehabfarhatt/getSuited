@@ -3,7 +3,7 @@ import { inject } from 'inversify';
 import { Request, Response } from 'express';
 import TYPES from '../config/types';
 import fs from 'fs';
-import EmailService from '../services/emailService';  // Correct import of EmailService
+import EmailService from '../services/emailService'; 
 
 // Multer configuration for handling file uploads
 import multer from 'multer';
@@ -19,14 +19,14 @@ export default class EmailController {
   async sendEmail(@request() req: Request, @response() res: Response) {
     try {
       const { email } = req.body;  // Get the email from the request body
-      const file = req.file;  // The uploaded file
+      const file = req.file; 
 
       if (!file) {
         return res.status(400).json({ error: 'No file uploaded' });
       }
 
       // Send the email with the attached PDF file
-      const filePath = file.path;  // File path where the PDF is temporarily stored
+      const filePath = file.path; 
       const result = await this.emailService.sendEmail(email, filePath);  // Pass the file path to EmailService
 
       // Clean up the file after sending the email
