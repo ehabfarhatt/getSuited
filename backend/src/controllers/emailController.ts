@@ -1,3 +1,36 @@
+// Author: Ehab Farhat - Alaa ElSet
+// File: EmailController.ts
+/*-- EmailController.ts --------------------------------------------------------------
+
+   This file defines the `EmailController`, an Express controller responsible for 
+   handling file upload and email delivery with attachments. It leverages `multer` 
+   for handling multipart form-data uploads and delegates email delivery to 
+   `EmailService`.
+
+   Features:
+      - Accepts file uploads (e.g., PDF reports) via multipart/form-data.
+      - Sends an email with the uploaded file as an attachment.
+      - Deletes the uploaded file from the server after email dispatch.
+      - Handles request validation and error logging.
+
+   Endpoints:
+      - POST /sendEmail/
+          ▸ Sends an email with an attached file.
+          ▸ Request body: multipart/form-data with fields:
+              - `email` (string): Recipient's email address
+              - `file` (File): Uploaded file (e.g., a PDF report)
+          ▸ Response: {
+              message: string,
+              result: any
+            }
+
+   Notes:
+      - Uses `multer` middleware to handle file upload to the `uploads/` directory.
+      - Automatically removes uploaded file after the email is sent to save disk space.
+      - Requires `EmailService` to implement `sendEmail(email, filePath)`.
+
+------------------------------------------------------------------------------------*/
+
 import { controller, httpPost, request, response } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import { Request, Response } from 'express';
