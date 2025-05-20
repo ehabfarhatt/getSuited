@@ -32,7 +32,7 @@
    Notes:
       - All controllers and passport strategies must be imported for auto-registration.
       - Be sure to update CORS origin and session settings before deploying to production.
-      - This setup supports both token-based and session-based authentication flows.
+      - This setup supports https://getsuited.onrender.comion-based authentication flows.
 
 ------------------------------------------------------------------------------------*/
 
@@ -70,7 +70,7 @@ server.setConfig(app => {
   /* ---------- CORS ---------- */
   app.use(
     cors({
-      origin: 'http://localhost:3000',
+      origin: 'https://www.getsuited.online',
       credentials: true,                                 // allow cookies / auth‑headers
       methods: 'GET,POST,PATCH,PUT,DELETE',
       allowedHeaders: 'Content-Type,Authorization',
