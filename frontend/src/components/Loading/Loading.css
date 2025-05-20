@@ -1,63 +1,63 @@
-/* src/components/Loading/Loading.css */
 .loading-container {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
-    color: white;
-    flex-direction: column;
-    font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white; /* ⬅️ Changed from gradient to white */
+  color: #4f46e5; /* ⬅️ Set text color to purple */
+  flex-direction: column;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.suitcase-loader {
+  text-align: center;
+}
+
+.briefcase {
+  width: 60px;
+  height: 40px;
+  border: 3px solid #4f46e5; /* ⬅️ Set border to purple */
+  border-radius: 4px;
+  position: relative;
+  animation: bounce 1.2s infinite ease-in-out;
+  margin: 0 auto 16px;
+}
+
+.briefcase::before {
+  content: "";
+  width: 24px;
+  height: 6px;
+  background: #4f46e5; /* ⬅️ Handle color to purple */
+  position: absolute;
+  top: -10px;
+  left: 18px;
+  border-radius: 2px;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0px);
   }
-  
-  .suitcase-loader {
-    text-align: center;
+  50% {
+    transform: translateY(-10px);
   }
-  
-  .briefcase {
-    width: 60px;
-    height: 40px;
-    border: 3px solid white;
-    border-radius: 4px;
-    position: relative;
-    animation: bounce 1.2s infinite ease-in-out;
-    margin: 0 auto 16px;
+}
+
+.loading-text {
+  font-size: 1.1rem;
+  animation: pulse 1.5s ease-in-out infinite;
+  letter-spacing: 1px;
+  color: #4f46e5; /* ⬅️ Explicitly set text color to purple */
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
   }
-  
-  .briefcase::before {
-    content: "";
-    width: 24px;
-    height: 6px;
-    background: white;
-    position: absolute;
-    top: -10px;
-    left: 18px;
-    border-radius: 2px;
+  50% {
+    opacity: 1;
   }
-  
-  @keyframes bounce {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
+  100% {
+    opacity: 0.3;
   }
-  
-  .loading-text {
-    font-size: 1.1rem;
-    animation: pulse 1.5s ease-in-out infinite;
-    letter-spacing: 1px;
-  }
-  
-  @keyframes pulse {
-    0% {
-      opacity: 0.3;
-    }
-    50% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0.3;
-    }
-  }
+}

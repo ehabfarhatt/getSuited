@@ -1,3 +1,21 @@
+/**
+ * 🧾 InterviewSetupForm Component
+ *
+ * A user-friendly form used to configure interview parameters before starting an AI-driven mock interview.
+ * It collects the user's intended role, work preferences, and company name to personalize the interview session.
+ *
+ * 📋 Key Fields:
+ * - Position (e.g., Software Engineer, Data Engineer)
+ * - Work Type (Internship, Full-Time, etc.)
+ * - Seniority Level (Junior, Mid, Senior)
+ * - Work Model (Remote, Onsite, Hybrid)
+ * - Company Name
+ *
+ * 📦 Features:
+ * - Validates that all fields are filled before proceeding
+ * - Uses controlled form inputs via `useState`
+ * - Sends form data up via `onComplete` callback
+ */
 import React, { useState } from 'react';
 import './InterviewSetupForm.css';
 import Icon1 from '../../../assets/career-icon-1.jpg';
@@ -12,6 +30,10 @@ interface InterviewDetails {
 }
 
 interface InterviewSetupFormProps {
+  /**
+   * Called when the form is completed successfully
+   * @param details - full interview setup form values
+   */
   onComplete: (details: InterviewDetails) => void;
 }
 

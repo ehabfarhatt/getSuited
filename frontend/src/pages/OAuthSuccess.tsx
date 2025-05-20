@@ -1,4 +1,16 @@
-// File: frontend/src/pages/OAuthSuccess.tsx
+/**
+ * ✅ OAuthSuccess.tsx
+ *
+ * Handles post-OAuth login redirection.
+ * After authentication via Google or LinkedIn, the backend redirects the user here
+ * with a JWT token as a URL parameter (`?token=...`).
+ *
+ * 📦 Features:
+ * - Extracts token from URL query string
+ * - Verifies token with backend
+ * - Saves token and decoded user info in localStorage
+ * - Redirects to homepage if successful, or to `/signin` on error
+ */
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

@@ -1,3 +1,15 @@
+/**
+ * 🎓 Courses Page
+ *
+ * Displays all available courses for authenticated users.
+ * If the user is not signed in, shows a modal prompting login.
+ *
+ * 📦 Features:
+ * - Verifies user authentication via token
+ * - Fetches all courses from backend
+ * - Dynamically builds and filters category tabs
+ * - Displays grouped and horizontally scrollable courses by category
+ */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Recdatabox from "../../components/Recdatabox/Recdatabox";
@@ -16,6 +28,9 @@ interface UserData {
   profilePicture?: string;
 }
 
+/**
+ * 🔐 Modal shown if user is not authenticated
+ */
 const RegisterPromptModal: React.FC<{ onRedirect: () => void }> = ({ onRedirect }) => (
   <div className="modal-overlay">
     <div className="modal-content">
@@ -26,6 +41,10 @@ const RegisterPromptModal: React.FC<{ onRedirect: () => void }> = ({ onRedirect 
   </div>
 );
 
+/**
+ * 🎓 Courses Page Component
+ * Authenticates user → Fetches courses → Filters by category → Displays grouped results
+ */
 const Courses: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [user, setUser] = useState<UserData | null>(null);

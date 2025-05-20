@@ -1,3 +1,19 @@
+/**
+ * 👤 UserProfile Page
+ *
+ * This page displays and manages the authenticated user’s profile.
+ * It supports:
+ * - Viewing and editing name and profile picture
+ * - Viewing evaluation reports (uploaded interview PDFs)
+ * - Displaying questionnaire score and interview count
+ * - Logging out
+ *
+ * 📦 Features:
+ * - Profile picture upload with live preview
+ * - Name editing with backend update
+ * - Fetches evaluation PDFs
+ * - Dynamic DataBoxes for progress and interviews
+ */
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import DataBox from "../../components/Databox/Databox";
@@ -34,6 +50,9 @@ const UserProfile: React.FC = () => {
     setLoading(false);
   }, []);
 
+   /**
+   * 📥 Fetch evaluation PDF reports
+   */
   useEffect(() => {
   const fetchEvaluations = async () => {
     const token = localStorage.getItem("token");
@@ -79,6 +98,9 @@ const UserProfile: React.FC = () => {
   //   }
   // };
 
+  /**
+   * ✏️ Save edited user name to backend
+   */
   const handleNameUpdate = async () => {
     const token = localStorage.getItem("token");
 
@@ -107,6 +129,9 @@ const UserProfile: React.FC = () => {
     }
   };
 
+    /**
+   * 📤 Upload a new profile picture
+   */
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
 

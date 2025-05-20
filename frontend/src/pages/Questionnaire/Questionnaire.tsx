@@ -1,8 +1,22 @@
+/**
+ * 📝 Questionnaire Page
+ *
+ * This page delivers field-specific or mixed-question quizzes to assess users' technical understanding.
+ * Users choose a major (or “Choose Your Career” for mixed fields), answer questions,
+ * and receive a final score. Results are optionally saved if the user is authenticated.
+ *
+ * 📦 Features:
+ * - Authenticated user detection and score persistence
+ * - Dynamic loading of questions based on major selection
+ * - Career path recommendation based on dominant correct field
+ */
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import "./Questionnaire.css";
 
+
+/** Interface for each quiz question */
 interface Question {
   _id: string;
   question: string;
@@ -36,6 +50,9 @@ const Questionnaire: React.FC = () => {
     "Cybersecurity",
   ];
 
+  /**
+   * 📦 Load user from localStorage if available
+   */
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -43,6 +60,10 @@ const Questionnaire: React.FC = () => {
     }
   }, []);
 
+
+  /**
+   * 🔄 When major changes, fetch questions accordingly
+   */
   useEffect(() => {
     if (selectedMajor) {
       resetQuiz();
@@ -81,6 +102,9 @@ const Questionnaire: React.FC = () => {
     setSelectedOption(option);
   };
 
+    /**
+   * ⏭ Move to next question or finish the quiz
+   */
   const handleNextQuestion = () => {
     const current = questions[currentQuestionIndex];
     const isCorrect = selectedOption === current.answer;
@@ -100,7 +124,7 @@ const Questionnaire: React.FC = () => {
       setSelectedOption("");
     } else {
       setQuizCompleted(true);
-      saveScore(score + (isCorrect ? 1 : 0)); // count final question
+      saveScore(score + (isCorrect ? 1 : 0)); 
     }
   };
 

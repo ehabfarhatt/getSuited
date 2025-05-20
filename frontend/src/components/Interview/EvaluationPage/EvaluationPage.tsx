@@ -1,9 +1,25 @@
+/**
+ * 📝 EvaluationPage Component
+ *
+ * Displays a detailed summary of an AI interview (both behavioral and technical).
+ * - Shows per-question results with code answers, feedback, and body language metrics.
+ * - Builds and exports a downloadable PDF report via jsPDF.
+ * - Automatically uploads the PDF to the backend (if user is authenticated).
+ * - Allows sending the report via email.
+ *
+ * 📦 Key Features:
+ * - Works for both behavioral and technical interviews
+ * - Uses `jsPDF` to generate downloadable documents
+ * - Authenticates users and saves results for later reuse
+ */
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../../Navbar/Navbar';
 import { jsPDF } from 'jspdf';
 import './EvaluationPage.css';
 
+
+/** Structure of a single evaluation entry (either behavioral or technical) */
 interface EvaluationResult {
   question: string;
   audioBlob?: Blob;
@@ -41,9 +57,7 @@ const EvaluationPage: React.FC = () => {
   const buildPdfDoc = () => {
     const doc = new jsPDF();
 
-    // Logo (optional)
     try {
-      // If you have a real base-64 string, use that; else require may fail in prod bundler.
       const logo = require('../../../assets/logo.png');
       doc.addImage(logo, 'PNG', 20, 10, 50, 20);
     } catch {}
@@ -131,7 +145,7 @@ const EvaluationPage: React.FC = () => {
   const downloadPdf = () => buildPdfDoc().save('interview_evaluation.pdf');
 
   /* ------------------------------------------------------------------
-   *  Auth + upload once
+   *  Auth + upload
    * ------------------------------------------------------------------ */
   useEffect(() => {
     const token = localStorage.getItem('token');
