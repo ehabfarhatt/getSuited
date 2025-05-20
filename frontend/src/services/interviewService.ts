@@ -63,7 +63,7 @@ Each question should be on a new line, and should evaluate both technical and so
 Respond ONLY with the 5 questions as plain text.
 `;
 
-  const response = await axios.post('http://localhost:5001/api/interview/generate-questions', { prompt });
+  const response = await axios.post('https://getsuited.onrender.com/api/interview/generate-questions', { prompt });
   return response.data;
 };
 
@@ -82,7 +82,7 @@ Each question should:
 Respond ONLY with the 5 questions as plain text, each on a new line.
 `;
 
-  const response = await axios.post('http://localhost:5001/api/interview/generate-questions', { prompt });
+  const response = await axios.post('https://getsuited.onrender.com/api/interview/generate-questions', { prompt });
   return response.data;
 };
 
@@ -103,7 +103,7 @@ Score: <a number between 0 and 100>
 Feedback: <brief feedback>
 `;
   
-    const res = await axios.post('http://localhost:5001/api/interview/evaluate', { prompt });
+    const res = await axios.post('https://getsuited.onrender.com/api/interview/evaluate', { prompt });
     const text = (res.data?.text || res.data)?.trim?.() || '';
     const scoreMatch = text.match(/Score:\s*(\d+)/i);
     const feedbackMatch = text.match(/Feedback:\s*(.*)/);

@@ -41,7 +41,7 @@ const TrainingChatbot: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      fetch('http://localhost:5001/auth/verify', {
+      fetch('https://getsuited.onrender.com/auth/verify', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       })

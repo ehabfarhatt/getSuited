@@ -56,7 +56,7 @@ const Courses: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:5001/auth/verify", {
+      fetch("https://getsuited.onrender.com/auth/verify", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -72,7 +72,7 @@ const Courses: React.FC = () => {
             });
             setStep('allowed');
 
-            fetch("http://localhost:5001/courses")
+            fetch("https://getsuited.onrender.com/courses")
               .then(res => res.json())
               .then(data => setCourses(data))
               .catch(err => console.error("Failed to fetch courses", err));
