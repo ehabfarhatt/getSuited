@@ -59,7 +59,7 @@ const UserProfile: React.FC = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5001/users/evaluations?email=${user.email}`,
+        `https://getsuited.onrender.com/users/evaluations?email=${user.email}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -83,7 +83,7 @@ const UserProfile: React.FC = () => {
   // const fetchInterviews = async (userId: string) => {
   //   try {
   //     const token = localStorage.getItem("token");
-  //     const res = await fetch(`http://localhost:5001/interviews/${userId}`, {
+  //     const res = await fetch(`https://getsuited.onrender.com/interviews/${userId}`, {
   //       headers: {
   //         Authorization: `Bearer ${token}`,
   //       },
@@ -106,7 +106,7 @@ const UserProfile: React.FC = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5001/users/${user._id}/name`,
+        `https://getsuited.onrender.com/users/${user._id}/name`,
         {
           method: "PATCH",
           headers: {
@@ -141,7 +141,7 @@ const UserProfile: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(
-        `http://localhost:5001/users/${user._id}/profilePicture`,
+        `https://getsuited.onrender.com/users/${user._id}/profilePicture`,
         {
           method: "PATCH",
           headers: { Authorization: `Bearer ${token}` },

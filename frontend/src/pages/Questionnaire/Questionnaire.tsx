@@ -80,7 +80,7 @@ const Questionnaire: React.FC = () => {
   const fetchQuestions = async (major: string) => {
     try {
       const response = await axios.get(
-        `http://localhost:5001/questionnaire/${encodeURIComponent(major)}`
+        `https://getsuited.onrender.com/questionnaire/${encodeURIComponent(major)}`
       );
       setQuestions(response.data);
     } catch (error) {
@@ -90,7 +90,7 @@ const Questionnaire: React.FC = () => {
 
   const fetchAllQuestions = async () => {
     try {
-      const response = await axios.get("http://localhost:5001/questionnaire");
+      const response = await axios.get("https://getsuited.onrender.com/questionnaire");
       const shuffled = response.data.sort(() => Math.random() - 0.5);
       setQuestions(shuffled);
     } catch (error) {
@@ -142,7 +142,7 @@ const Questionnaire: React.FC = () => {
       }
 
       const response = await axios.patch(
-        `http://localhost:5001/users/${user._id}/score`,
+        `https://getsuited.onrender.com/users/${user._id}/score`,
         { score: finalScore },
         {
           headers: {

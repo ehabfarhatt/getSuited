@@ -48,7 +48,7 @@ const LandingPage: React.FC = () => {
     const token = localStorage.getItem("token");
 
     if (token) {
-      fetch("http://localhost:5001/auth/verify", {
+      fetch("https://getsuited.onrender.com/auth/verify", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ const LandingPage: React.FC = () => {
         });
     }
 
-    fetch("http://localhost:5001/courses")
+    fetch("https://getsuited.onrender.com/courses")
       .then((res) => res.json())
       .then((data) => setCourses(data.slice(0, 10)))
       .catch((err) => console.error("Failed to fetch courses", err));

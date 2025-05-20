@@ -51,7 +51,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:5001/auth/register", {
+      const response = await fetch("https://getsuited.onrender.com/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
@@ -74,7 +74,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
   };
 
   const handleGoogleSignup = () => {
-    window.location.href = "http://localhost:5001/auth/google";
+    window.location.href = "https://getsuited.onrender.com/auth/google";
   };
 
   return (
@@ -89,7 +89,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
           <button className="google-btn" onClick={handleGoogleSignup}>
             <FaGoogle /> Sign up with Google
           </button>
-          <button className="linkedin-btn" onClick={() => window.location.href = "http://localhost:5001/auth/linkedin"}>
+          <button className="linkedin-btn" onClick={() => window.location.href = "https://getsuited.onrender.com/auth/linkedin"}>
           <FaLinkedin /> Continue with LinkedIn
         </button>
         </div>

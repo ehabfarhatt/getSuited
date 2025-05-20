@@ -91,7 +91,7 @@ server.setConfig(app => {
   app.use(passport.session());
 
   /* ---------- Static uploads ---------- */
-  //  …/backend/uploads/  →  http://localhost:5001/uploads/<file>
+  //  …/backend/uploads/  →  https://getsuited.onrender.com/uploads/<file>
   // in server.ts
   app.use('/uploads', express.static(path.resolve(__dirname, '../../uploads')));
 

@@ -58,7 +58,7 @@ export default function CourseDetails() {
    * 📡 Fetch course data from backend on component mount
    */
   useEffect(() => {
-    fetch(`http://localhost:5001/courses/${courseId}`)
+    fetch(`https://getsuited.onrender.com/courses/${courseId}`)
       .then((res) => res.json())
       .then((data: Course) => setCourse(data))
       .catch((err) => console.error("Failed to fetch course", err));

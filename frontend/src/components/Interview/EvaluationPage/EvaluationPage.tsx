@@ -151,7 +151,7 @@ const EvaluationPage: React.FC = () => {
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    fetch('http://localhost:5001/auth/verify', {
+    fetch('https://getsuited.onrender.com/auth/verify', {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -177,7 +177,7 @@ const EvaluationPage: React.FC = () => {
         form.append('file', blob, 'interview_evaluation.pdf');
         form.append('email', user.email);
 
-        await fetch('http://localhost:5001/users/upload-evaluation', {
+        await fetch('https://getsuited.onrender.com/users/upload-evaluation', {
           method: 'POST',
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
           body: form,
@@ -201,7 +201,7 @@ const EvaluationPage: React.FC = () => {
     form.append('email', user.email);
 
     try {
-      const res = await fetch('http://localhost:5001/sendEmail', {
+      const res = await fetch('https://getsuited.onrender.com/sendEmail', {
         method: 'POST',
         body: form,
       });

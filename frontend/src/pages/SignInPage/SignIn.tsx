@@ -37,7 +37,7 @@ const SignIn: React.FC<SignInProps> = ({ onSignIn }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5001/auth/login", {
+      const response = await fetch("https://getsuited.onrender.com/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -59,7 +59,7 @@ const SignIn: React.FC<SignInProps> = ({ onSignIn }) => {
 
   /** 🧠 Trigger Google OAuth flow */
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5001/auth/google";
+    window.location.href = "https://getsuited.onrender.com/auth/google";
   };
 
   return (
@@ -74,7 +74,7 @@ const SignIn: React.FC<SignInProps> = ({ onSignIn }) => {
           <button className="google-btn" onClick={handleGoogleLogin}>
             <FaCheck /> Continue with Google
           </button>
-          <button className="linkedin-btn" onClick={() => window.location.href = "http://localhost:5001/auth/linkedin"}>
+          <button className="linkedin-btn" onClick={() => window.location.href = "https://getsuited.onrender.com/auth/linkedin"}>
           <FaLinkedin /> Continue with LinkedIn
         </button>
         </div>

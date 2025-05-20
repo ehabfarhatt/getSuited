@@ -12,7 +12,7 @@
       - Retrieves previously saved evaluation reports for a given user by email.
 
    API Base:
-      - `http://localhost:5001/api`
+      - `https://getsuited.onrender.com/api`
 
    Functions:
       - fetchCareerAdvice(userMessage, transcriptText?)
@@ -36,7 +36,7 @@
 
 import axios from 'axios';
 
-const API_BASE = 'http://localhost:5001/api';
+const API_BASE = 'https://getsuited.onrender.com/api';
 
 export const fetchCareerAdvice = async (
   userMessage: string,
@@ -88,7 +88,7 @@ export const fetchUserEvaluations = async (email: string) => {
   try {
     const token = localStorage.getItem('token');
     const res = await axios.get(
-      `http://localhost:5001/users/evaluations`,   // 👈 no /api
+      `https://getsuited.onrender.com/users/evaluations`,   // 👈 no /api
       {
         params: { email },
         headers: { Authorization: `Bearer ${token}` },
