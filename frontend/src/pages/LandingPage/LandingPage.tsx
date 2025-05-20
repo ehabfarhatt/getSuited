@@ -1,3 +1,18 @@
+/**
+ * 🏠 LandingPage Component
+ *
+ * This is the homepage of the getSuited platform. It shows:
+ * - A user navbar (with or without profile data)
+ * - An image slider announcing core platform actions
+ * - A horizontally scrollable section of featured courses
+ * - Quick access buttons for Interview and Questionnaire modules
+ *
+ * 📦 Features:
+ * - Fetches and displays up to 10 featured courses
+ * - Authenticates user and displays personalized Navbar
+ * - Includes an image-based announcement slider with call-to-action buttons
+ * - Uses `SliderBar` for scrollable content sections
+ */
 import React, { useEffect, useState } from "react";
 import "./LandingPage.css";
 import Navbar from "../../components/Navbar/Navbar";
@@ -11,6 +26,7 @@ interface UserData {
   profilePicture?: string;
 }
 
+/** Course type from backend */
 interface Course {
   _id: string;
   Title: string;
@@ -23,6 +39,11 @@ const LandingPage: React.FC = () => {
   const [user, setUser] = useState<UserData | null>(null);
   const [courses, setCourses] = useState<Course[]>([]);
 
+  /**
+   * 📡 On mount:
+   * - Verify user token and fetch user info
+   * - Fetch up to 10 featured courses
+   */
   useEffect(() => {
     const token = localStorage.getItem("token");
 

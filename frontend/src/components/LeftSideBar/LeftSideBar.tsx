@@ -1,7 +1,25 @@
+/**
+ * 📚 LeftSideBar Component
+ *
+ * This component renders a sidebar navigation menu for a course details page.
+ * It displays the course title and anchors to key sections on the page.
+ *
+ * 📦 Features:
+ * - Dynamically shows the current course title
+ * - Provides anchor links to jump to video, learning goals, and content sections
+ * - Includes a link back to the main Courses page
+ *
+ * 📍 Intended to be used on the Course Details page.
+ */
 import React from "react";
 import { Link } from "react-router-dom";
 import "./LeftSideBar.css";
 
+
+/**
+ * Props for the LeftSideBar component
+ * @property courseTitle - Optional course title to display at the top of the sidebar
+ */
 interface SidebarProps {
   courseTitle?: string;
 }

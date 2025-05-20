@@ -1,5 +1,22 @@
 import React from 'react';
+/**
+ * ⚠️ DisclaimerModal Component
+ *
+ * A full-screen modal displayed before starting the AI interview simulation.
+ * Informs users about the use of their webcam and microphone, pseudocode expectations,
+ * and how AI will process and evaluate their responses.
+ *
+ * 📦 Features:
+ * - Blocks the rest of the UI (fullscreen overlay)
+ * - Requires user consent before proceeding
+ * - Styled with inline styles for simplicity (no external CSS required)
+ */
 
+
+/**
+ * Props for DisclaimerModal
+ * @property onAccept - Callback triggered when the user clicks the “I Agree” button
+ */
 interface DisclaimerModalProps {
   onAccept: () => void;
 }

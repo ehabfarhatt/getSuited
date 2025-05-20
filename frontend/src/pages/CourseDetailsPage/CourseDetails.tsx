@@ -1,9 +1,28 @@
-// src/pages/CourseDetails.tsx
+/**
+ * 📘 CourseDetails Page
+ *
+ * This page displays full details of a selected course.
+ * It fetches the course using its ID from the URL params, then renders:
+ * - Course title, description, and category
+ * - Embedded YouTube video (if provided)
+ * - Text-based course content/overview
+ * - Book link (if available)
+ * - A sidebar for quick section navigation
+ *
+ * 📦 Features:
+ * - Fetches data from backend using `useParams`
+ * - Validates YouTube URL and embeds video
+ * - Includes back button for course navigation
+ */
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import "./CourseDetails.css";
 
+
+/**
+ * Structure for a Course object
+ */
 interface Course {
   _id: string;
   Title: string;
@@ -19,6 +38,12 @@ export default function CourseDetails() {
   const navigate = useNavigate();
   const [course, setCourse] = useState<Course | null>(null);
 
+
+  /**
+   * 🎥 Extracts YouTube video ID and returns embeddable URL
+   * @param url - raw YouTube video URL
+   * @returns embed URL or empty string
+   */
   const getEmbedUrl = (url: string) => {
     try {
       const u = new URL(url);
@@ -29,6 +54,9 @@ export default function CourseDetails() {
     }
   };
 
+   /**
+   * 📡 Fetch course data from backend on component mount
+   */
   useEffect(() => {
     fetch(`http://localhost:5001/courses/${courseId}`)
       .then((res) => res.json())

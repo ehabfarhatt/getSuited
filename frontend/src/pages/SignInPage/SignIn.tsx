@@ -1,3 +1,17 @@
+/**
+ * 🔐 SignIn Page
+ *
+ * This component handles user login via:
+ * - Email & password
+ * - Google OAuth
+ * - LinkedIn OAuth
+ *
+ * 📦 Features:
+ * - Authenticates via local backend (`/auth/login`)
+ * - Supports toggling password visibility
+ * - Stores JWT token and user data in localStorage
+ * - Redirects user on successful login
+ */
 import React, { useState } from "react";
 import "./SignIn.css";
 import { FaCheck as RawFaCheck, FaLinkedin as RawFaLinkedin } from "react-icons/fa";
@@ -43,6 +57,7 @@ const SignIn: React.FC<SignInProps> = ({ onSignIn }) => {
     }
   };
 
+  /** 🧠 Trigger Google OAuth flow */
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:5001/auth/google";
   };

@@ -1,3 +1,25 @@
+/**
+ * 🎤 StartInterview Component
+ * 
+ * This component conducts a behavioral interview simulation. It displays one question at a time,
+ * uses speech synthesis to read questions aloud, records the user's response via microphone and webcam,
+ * analyzes facial expressions (e.g., smile, blink, eye contact) using `face-api.js`,
+ * and processes the audio with Deepgram (for transcription) and AssemblyAI (for tone analysis).
+ *
+ * The component returns a comprehensive evaluation including:
+ * - Transcript
+ * - Tone confidence
+ * - Body language metrics
+ * - Custom confidence score
+ *
+ * 📦 Dependencies:
+ * - face-api.js
+ * - Deepgram API
+ * - AssemblyAI API
+ * - React Router
+ *
+ * 🧠 EvaluationResult includes per-question breakdowns with audio and body language analysis.
+ */
 import React, { useEffect, useState, useRef } from 'react';
 import { fetchInterviewQuestions } from '../../../services/interviewService';
 import { analyzeAudioWithDeepgram } from '../../../services/deepgramService';
@@ -15,7 +37,7 @@ interface StartInterviewProps {
     };
     onInterviewComplete: (results: EvaluationResult[]) => void;
   }
-
+/** Structure of the evaluation result returned for each question */
 type EvaluationResult = {
   question: string;
   audioBlob: Blob;
@@ -24,7 +46,7 @@ type EvaluationResult = {
   bodyLanguage?: BodyLanguageMetrics;
   toneConfidence?: number;
 };
-
+/** Body language metrics extracted from facial expression tracking */
 type BodyLanguageMetrics = {
     smilingScore: number;
     eyeContact: boolean;
@@ -53,23 +75,25 @@ type BodyLanguageMetrics = {
   };
 
   const StartInterview: React.FC<StartInterviewProps> = ({ interviewDetails, onInterviewComplete }) => {
+  // State hooks
   const [countdown, setCountdown] = useState(5);
   const [questions, setQuestions] = useState<string[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [results, setResults] = useState<EvaluationResult[]>([]);
+  const [modelsLoaded, setModelsLoaded] = useState(false);
+  const [bodyLanguageResults, setBodyLanguageResults] = useState<BodyLanguageMetrics[]>([]);
+  const [audioLevelBars, setAudioLevelBars] = useState<number[]>([0, 0, 0, 0, 0]);
+  // Refs for media & tracking
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordedChunksRef = useRef<Blob[]>([]);
-  const [modelsLoaded, setModelsLoaded] = useState(false);
-  const [bodyLanguageResults, setBodyLanguageResults] = useState<BodyLanguageMetrics[]>([]);
   const faceDataRef = useRef<FaceFrame[]>([]);
-    const faceIntervalRef = useRef<NodeJS.Timeout | null>(null);
-    const audioStreamRef = useRef<MediaStream | null>(null);
-    const [audioLevelBars, setAudioLevelBars] = useState<number[]>([0, 0, 0, 0, 0]);
-const analyserRef = useRef<AnalyserNode | null>(null);
-const audioCtxRef = useRef<AudioContext | null>(null);
+  const faceIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const audioStreamRef = useRef<MediaStream | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const audioCtxRef = useRef<AudioContext | null>(null);
 
-
+// Helper to calculate standard deviation
 function stddev(values: number[]): number {
     const mean = values.reduce((sum, val) => sum + val, 0) / values.length;
     const variance = values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / values.length;
@@ -89,6 +113,7 @@ function stddev(values: number[]): number {
     }
   }, [countdown, modelsLoaded]);
 
+  /** Load face-api models once */
   useEffect(() => {
     const loadModels = async () => {
         const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
@@ -105,6 +130,7 @@ function stddev(values: number[]): number {
     loadModels();
   }, []);
 
+   /** Begin full interview process: questions, camera, tracking */
   const startInterview = async () => {
     // if (!modelsLoaded) {
     //   console.warn('⏳ Models not ready yet.');
@@ -114,13 +140,12 @@ function stddev(values: number[]): number {
     const res = await fetchInterviewQuestions(interviewDetails);
     setQuestions(res.questions);
   
-    await startCamera(); // ensure camera loads before you start analyzing
+    await startCamera();
     speakQuestion(res.questions[0], async () => {
         await startRecording();
         startFaceTracking();
       });
   
-    // Start analyzing face every 2 seconds AFTER all above is ready
     setInterval(analyzeFace, 2000);
   };
 
@@ -132,7 +157,7 @@ function stddev(values: number[]): number {
   }
 
   const startFaceTracking = () => {
-    faceDataRef.current = []; // Reset for current question
+    faceDataRef.current = [];
     faceIntervalRef.current = setInterval(async () => {
       if (!modelsLoaded || !videoRef.current) return;
   
@@ -156,7 +181,7 @@ function stddev(values: number[]): number {
         const jaw = landmarks.getJawOutline();
 
         const yaw = leftEye[0].x - rightEye[3].x;
-        const eyeContact = Math.abs(yaw) < 25; // closer to facing front
+        const eyeContact = Math.abs(yaw) < 25; 
   
         const eyeDistance = Math.abs(leftEye[0].y - rightEye[3].y);
         //const eyeContact = eyeDistance < 10;
@@ -192,6 +217,7 @@ function stddev(values: number[]): number {
     }, 1000);
   };
   
+  /** Stop tracking and summarize body language into confidence score */
   const stopFaceTracking = (): BodyLanguageMetrics & { confidence: number } => {
     if (faceIntervalRef.current) {
       clearInterval(faceIntervalRef.current);
@@ -228,7 +254,6 @@ function stddev(values: number[]): number {
     const mouthSteadinessScoreRaw = 1 - stddev(data.map(d => d.mouthOpenness));
     const mouthSteadinessScore = Math.max(0, Math.min(1, mouthSteadinessScoreRaw));
   
-    // 💡 New confidence formula — no eyeContact
     const confidence =
       0.4 * (1 - headPoseVarianceNorm) +
       0.25 * (1 - emotionVariance) +
@@ -254,7 +279,7 @@ function stddev(values: number[]): number {
 
   const drawFaceLoop = async () => {
     const canvas = faceapi.createCanvasFromMedia(videoRef.current!);
-    canvas.id = 'face-canvas'; // give it an ID to avoid duplication
+    canvas.id = 'face-canvas';
   
     if (!document.getElementById('face-canvas')) {
       videoRef.current?.parentElement?.appendChild(canvas);
@@ -291,7 +316,7 @@ function stddev(values: number[]): number {
         videoRef.current.srcObject = stream;
         videoRef.current.onloadedmetadata = () => {
             videoRef.current?.play();
-            drawFaceLoop(); // start drawing loop
+            drawFaceLoop(); 
           };
       }
     } catch (err) {
@@ -325,7 +350,6 @@ function stddev(values: number[]): number {
       // map avg [0..255] → height [0..1]
       const level = Math.min(avg / 255, 1);
   
-      // build 5 bars with slight random jitter so they differ
       setAudioLevelBars([
         level,
         level * 0.8 + Math.random() * 0.1,
@@ -409,7 +433,6 @@ function stddev(values: number[]): number {
       const updatedResults = [...results, newEntry];
       setResults(updatedResults);
 
-      // Start tone analysis in the background
       analyzeToneWithAssembly(blob).then((assemblyResult) => {
         const refined = [...updatedResults];
         refined[index] = {

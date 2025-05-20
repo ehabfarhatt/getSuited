@@ -1,3 +1,17 @@
+/**
+ * 🧠 InterviewHome Page
+ *
+ * This component controls the full flow of the interview simulation on getSuited.
+ * It manages the registration check, disclaimer modal, interview setup,
+ * behavioral questions, technical questions, and finally redirects to the evaluation page.
+ *
+ * 📦 Features:
+ * - Auth check via JWT token
+ * - Disclaimer agreement required before proceeding
+ * - Step-by-step interview stage management
+ * - Supports both behavioral and technical interview modes
+ * - Stores intermediate results and passes all results to the evaluation page
+ */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DisclaimerModal from '../../components/Interview/DisclaimerModal';
@@ -7,13 +21,16 @@ import TechnicalInterview from '../../components/Interview/TechnicalInterview';
 import { EvaluationResult, InterviewDetails } from '../../type/interview';
 import Navbar from '../../components/Navbar/Navbar';
 
+/** Authenticated user structure */
 interface UserData {
   name: string;
   email: string;  // Added email field
   profilePicture?: string;
 }
 
-// Inline modal component
+/**
+ * 🔐 Inline Modal for users who are not signed in
+ */
 const RegisterPromptModal: React.FC<{ onRedirect: () => void }> = ({ onRedirect }) => (
   <div style={{
     position: 'fixed',
@@ -60,6 +77,12 @@ const InterviewHome: React.FC = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<UserData | null>(null);
 
+    /**
+   * 🧾 On mount or when `step` changes to 'registerCheck':
+   * - Checks for a valid token
+   * - If valid → loads user and proceeds to disclaimer
+   * - If invalid → shows login/register modal
+   */
   useEffect(() => {
     if (step === 'registerCheck') {
       const token = localStorage.getItem('token');
@@ -97,16 +120,28 @@ const InterviewHome: React.FC = () => {
     setStep('position');
   };
 
+    /**
+   * 📝 Interview setup complete (role, company, seniority, etc.)
+   * Starts the behavioral or combined interview flow
+   */
   const handleCompleteSetup = (details: InterviewDetails) => {
     setInterviewDetails(details);
     setStep('combined'); // Or 'behavioral' / 'technical'
   };
 
+   /**
+   * 🎤 Behavioral interview finished
+   * Stores results and transitions to technical round
+   */
   const handleBehavioralComplete = (behavioralResults: EvaluationResult[]) => {
     setResults(behavioralResults);
     setStep('technical');
   };
 
+  /**
+   * 💻 Technical interview finished
+   * Combines results and redirects to evaluation
+   */
   const handleTechnicalComplete = (technicalResults: EvaluationResult[]) => {
     const allResults = [...results, ...technicalResults];
     navigate('/evaluation', { state: { results: allResults } });

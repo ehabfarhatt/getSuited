@@ -1,8 +1,27 @@
+/**
+ * 💻 TechnicalInterview Component
+ *
+ * This component simulates the technical part of an AI interview.
+ * Users are presented with a series of technical questions and are asked to respond using **pseudocode**.
+ * Each answer is sent to an evaluation service, which scores the logic and returns feedback.
+ *
+ * 📦 Features:
+ * - Uses Monaco Editor for clean pseudocode input
+ * - Fetches questions dynamically based on the interview role
+ * - Submits pseudocode to a backend evaluator
+ * - Provides AI-generated feedback and score
+ * - Aggregates results and passes them to the parent component
+ */
 import React, { useEffect, useState } from 'react';
 import { fetchTechnicalQuestions, evaluatePseudocode } from '../../services/interviewService';
 import MonacoEditor from 'react-monaco-editor';
 import { EvaluationResult, InterviewDetails } from '../../type/interview';
 
+/**
+ * Props for the TechnicalInterview component
+ * @property interviewDetails - Interview configuration selected by the user
+ * @property onInterviewComplete - Callback triggered with all evaluated answers
+ */
 interface TechnicalInterviewProps {
   interviewDetails: InterviewDetails;
   onInterviewComplete: (results: EvaluationResult[]) => void;
@@ -16,6 +35,9 @@ const TechnicalInterview: React.FC<TechnicalInterviewProps> = ({ interviewDetail
   const [feedback, setFeedback] = useState('');
   const [loading, setLoading] = useState(false);
 
+    /**
+   * 🔄 Fetch questions on component mount based on interview details
+   */
   useEffect(() => {
     const loadQuestions = async () => {
       const res = await fetchTechnicalQuestions(interviewDetails);
@@ -24,6 +46,9 @@ const TechnicalInterview: React.FC<TechnicalInterviewProps> = ({ interviewDetail
     loadQuestions();
   }, [interviewDetails]);
 
+    /**
+   * 📤 Submit pseudocode to backend evaluator and process the result
+   */
   const handleRunCode = async () => {
     const currentQuestion = questions[currentIndex];
     setLoading(true);

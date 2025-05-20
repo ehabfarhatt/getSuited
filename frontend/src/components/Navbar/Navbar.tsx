@@ -1,7 +1,23 @@
+/**
+ * 🔝 Navbar Component
+ *
+ * Main navigation bar for the getSuited platform. Displays site logo, links to major modules,
+ * and user profile or sign-in button depending on authentication state.
+ *
+ * 📦 Features:
+ * - Shows navigation links: Courses, Interview, Training, Questionnaire
+ * - If user is logged in, shows their name and profile picture
+ * - If not logged in, shows a Sign In button
+ * - Retrieves user from `props` or `localStorage` fallback
+ */
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
+/**
+ * Props passed to Navbar
+ * @property user - Optional user object containing name and profile picture
+ */
 interface UserProps {
   user?: {
     name: string;
@@ -13,6 +29,9 @@ const Navbar: React.FC<UserProps> = ({ user }) => {
   const [storedUser, setStoredUser] = useState(user || null);
   const navigate = useNavigate();
 
+   /**
+   * Load user from localStorage if not passed in via props
+   */
   useEffect(() => {
     if (!user) {
       const localUser = localStorage.getItem("user");

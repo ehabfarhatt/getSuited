@@ -1,3 +1,16 @@
+/**
+ * 🧠 TrainingChatbot Page
+ *
+ * Allows users to:
+ * - Upload a PDF transcript of their interview evaluation
+ * - Analyze past evaluation files
+ * - Ask questions and receive AI-generated career advice
+ *
+ * 📦 Features:
+ * - Uses AI to respond based on uploaded evaluation context
+ * - Integrates with backend to fetch user details and evaluations
+ * - Accepts PDF uploads or selects from stored files
+ */
 import React, { useState, useEffect } from 'react';
 import { fetchCareerAdvice, uploadInterviewTranscript, fetchUserEvaluations } from '../../services/trainingService';
 import './TrainingChatbot.css';
@@ -22,7 +35,9 @@ const TrainingChatbot: React.FC = () => {
   const [evaluations, setEvaluations] = useState<Evaluation[]>([]);
   const [user, setUser] = useState<{ name: string; email: string; profilePicture?: string } | null>(null);
 
-  // Load user from token
+/**
+   * 🔐 Load authenticated user from JWT token
+   */
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {

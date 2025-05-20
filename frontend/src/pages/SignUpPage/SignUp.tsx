@@ -1,3 +1,17 @@
+/**
+ * 🆕 SignUp Page
+ *
+ * This page handles user registration using:
+ * - Name, email, password, and confirmation
+ * - Google OAuth signup
+ * - LinkedIn OAuth signup
+ *
+ * 📦 Features:
+ * - Client-side password confirmation check
+ * - Stores JWT token and user data on success
+ * - Redirects user to homepage after signup
+ * - Includes social authentication buttons
+ */
 import React, { useState } from "react";
 import "./SignUp.css";
 // import { FaGoogle } from "react-icons/fa6";
@@ -22,6 +36,12 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp }) => {
 
   const handleToggleShowPassword = () => setShowPassword((prev) => !prev);
 
+   /**
+   * 🧾 Handle form submission
+   * - Validates passwords match
+   * - Sends signup request
+   * - Stores token & user
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
