@@ -73,6 +73,7 @@ server.setConfig(app => {
       origin: [
             'https://www.getsuited.online',
             'https://getsuited.online',
+            'https://get-suited-git-main-getsuiteds-projects.vercel.app',
             'https://get-suited-getsuiteds-projects.vercel.app',
             ],
       credentials: true,                                 // allow cookies / auth‑headers
