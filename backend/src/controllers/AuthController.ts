@@ -1,3 +1,38 @@
+// Author: Ehab Farhat - Alaa ElSet
+// File: AuthController.ts
+/*-- AuthController.ts ---------------------------------------------------------------
+
+   This file defines the `AuthController`, an Express controller class for handling 
+   user authentication using the InversifyJS and inversify-express-utils framework.
+
+   Features:
+      - Handles user registration, login, and token verification endpoints.
+      - Uses dependency injection to interact with `AuthService`.
+      - Returns structured JSON responses with appropriate HTTP status codes.
+      - Manages token validation using Bearer token scheme.
+
+   Endpoints:
+      - POST /auth/register
+          ▸ Registers a new user.
+          ▸ Request body: { name, email, password, profilePicture }
+          ▸ Response: { message, user, token }
+
+      - POST /auth/login
+          ▸ Authenticates an existing user.
+          ▸ Request body: { email, password }
+          ▸ Response: { message, user, token }
+
+      - POST /auth/verify
+          ▸ Verifies the validity of a JWT token.
+          ▸ Requires Authorization header: Bearer <token>
+          ▸ Response: { valid, decoded }
+
+   Notes:
+      - Requires `reflect-metadata` for decorators to work with Inversify.
+      - AuthService must implement `register`, `login`, and `verifyToken` methods.
+
+------------------------------------------------------------------------------------*/
+
 import { Request, Response } from 'express';
 import { controller, httpPost, request, response } from 'inversify-express-utils';
 import { inject } from 'inversify';

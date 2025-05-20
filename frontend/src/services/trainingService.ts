@@ -1,10 +1,43 @@
+// Author: Ehab Farhat - Alaa ElSet
+// File: trainingService.ts
+/*-- trainingService.ts --------------------------------------------------------------
+
+   This file defines client-side utility functions for interacting with the AI-powered 
+   training and evaluation system. It enables uploading transcripts, receiving career 
+   advice, and retrieving stored evaluation reports from the backend.
+
+   Features:
+      - Submits user prompts and optional transcripts to receive career guidance via AI.
+      - Supports uploading PDF interview transcripts (from file or URL) for analysis.
+      - Retrieves previously saved evaluation reports for a given user by email.
+
+   API Base:
+      - `http://localhost:5001/api`
+
+   Functions:
+      - fetchCareerAdvice(userMessage, transcriptText?)
+          ▸ Sends a chat prompt and optional transcript to `/training/chat`.
+          ▸ Returns an AI-generated career coaching response.
+
+      - uploadInterviewTranscript(file | { url })
+          ▸ Uploads a transcript as a file or by URL to `/training/uploadTranscript`.
+          ▸ Uses `multipart/form-data` or JSON based on input type.
+
+      - fetchUserEvaluations(email)
+          ▸ Retrieves a user's evaluation records using their email.
+          ▸ Sends an authenticated GET request to `/users/evaluations`.
+
+   Notes:
+      - All `/training` requests use `/api` prefix; `/users/evaluations` does not.
+      - JWT token must be stored in `localStorage` as `token` for authenticated requests.
+      - Make sure CORS and token middleware are properly configured on the backend.
+
+------------------------------------------------------------------------------------*/
+
 import axios from 'axios';
 
 const API_BASE = 'http://localhost:5001/api';
 
-/**
- * Send user message and optional transcript for analysis
- */
 export const fetchCareerAdvice = async (
   userMessage: string,
   transcriptText?: string
@@ -28,14 +61,10 @@ export const fetchCareerAdvice = async (
   }
 };
 
-/**
- * Upload a new interview transcript PDF for analysis
- */
 export const uploadInterviewTranscript = async (
   file: File | { url: string }
 ): Promise<void> => {
   if ('url' in file) {
-    // For existing URL-based transcripts
     await axios.post(
       `${API_BASE}/training/uploadTranscript`,
       { url: file.url },
@@ -55,9 +84,6 @@ export const uploadInterviewTranscript = async (
   }
 };
 
-/**
- * Fetch list of user's saved evaluation transcripts
- */
 export const fetchUserEvaluations = async (email: string) => {
   try {
     const token = localStorage.getItem('token');

@@ -1,3 +1,46 @@
+// Author: Ehab Farhat - Alaa ElSet
+// File: CourseController.ts
+/*-- CourseController.ts -------------------------------------------------------------
+
+   This file defines the `CourseController`, an Express controller class responsible 
+   for handling HTTP requests related to course creation and retrieval. It uses 
+   InversifyJS for dependency injection and integrates middleware for authentication.
+
+   Features:
+      - Allows authenticated users to create new courses.
+      - Provides public access to retrieve all courses or a specific course by ID.
+      - Utilizes JWT authentication middleware for protected endpoints.
+      - Uses structured JSON responses with proper error handling and status codes.
+
+   Endpoints:
+      - POST /courses/add
+          ▸ Creates a new course (requires JWT authentication).
+          ▸ Request body: {
+              title: string,
+              description: string,
+              price?: number,
+              youtubeUrl?: string,
+              bookLink?: string,
+              content?: string
+            }
+          ▸ Response: Created course object
+
+      - GET /courses/
+          ▸ Fetches all available courses.
+          ▸ Response: Array of course objects
+
+      - GET /courses/:id
+          ▸ Retrieves a course by its unique identifier.
+          ▸ Path param: id (string)
+          ▸ Response: Course object or 404 if not found
+
+   Notes:
+      - The controller depends on `CourseService` for business logic.
+      - The `authenticateJWT` middleware protects the course creation endpoint.
+      - Requires consistent data validation and security checks in `CourseService`.
+
+------------------------------------------------------------------------------------*/
+
 import { Request, Response } from 'express';
 import { controller, httpPost, httpGet, requestParam, requestBody, response } from 'inversify-express-utils';
 import { inject } from 'inversify';

@@ -1,3 +1,31 @@
+// Author: Ehab Farhat - Alaa ElSet
+// File: inversify.config.ts
+/*-- inversify.config.ts -------------------------------------------------------------
+
+   This file configures the Dependency Injection (DI) container using the `inversify` 
+   library, allowing for decoupled and testable service management throughout the 
+   application.
+
+   Features:
+      - Initializes a DI `Container` instance.
+      - Binds core service classes to their respective symbolic `TYPES`.
+      - Supports constructor injection for services across the backend.
+      - Promotes scalability and maintainability via loosely coupled dependencies.
+
+   Services Bound:
+      - UserService
+      - CourseService
+      - InterviewService
+      - QuestionnaireService
+      - AuthService
+      - EmailService
+
+   Notes:
+      - Requires a `types.ts` file exporting unique identifiers for services.
+      - Ensure that each bound service class is decorated with `@injectable()`.
+
+------------------------------------------------------------------------------------*/
+
 import { Container } from 'inversify';
 import TYPES from './types'; 
 

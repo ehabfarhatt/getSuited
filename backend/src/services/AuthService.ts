@@ -1,3 +1,42 @@
+// Author: Ehab Farhat - Alaa ElSet
+// File: AuthService.ts
+/*-- AuthService.ts ------------------------------------------------------------------
+
+   This file defines the `AuthService` class, a business logic service responsible for 
+   handling authentication-related operations including user registration, login, and 
+   JWT verification. It uses bcrypt for password hashing and JWT for token-based auth.
+
+   Features:
+      - Registers new users after ensuring email uniqueness.
+      - Hashes passwords securely using bcrypt before saving to the database.
+      - Authenticates users via email and password with JWT token generation.
+      - Verifies JWT tokens and returns decoded payloads for authorization purposes.
+
+   Methods:
+      - register(name, email, password, profilePicture?)
+          ▸ Checks for existing user by email.
+          ▸ Hashes password and saves new user.
+          ▸ Returns a JWT and user object (password excluded).
+
+      - login(email, password)
+          ▸ Verifies user credentials and password hash.
+          ▸ Returns a JWT and user object (password excluded).
+
+      - verifyToken(token)
+          ▸ Validates and decodes a JWT using the app's secret key.
+          ▸ Throws error on invalid or expired tokens.
+
+   Environment Variables Required:
+      - JWT_SECRET
+      - JWT_EXPIRES_IN
+
+   Notes:
+      - Decorated with `@injectable()` for use with InversifyJS DI container.
+      - Works in coordination with the `AuthController` and `User` Mongoose model.
+      - Password field is omitted before returning the user object to the client.
+
+------------------------------------------------------------------------------------*/
+
 import { injectable } from 'inversify';
 import bcrypt from 'bcryptjs';
 import jwt, { SignOptions } from 'jsonwebtoken';

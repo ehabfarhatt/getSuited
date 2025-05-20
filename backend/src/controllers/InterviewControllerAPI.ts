@@ -1,3 +1,36 @@
+// Author: Ehab Farhat - Alaa ElSet
+// File: InterviewController.ts (AI Evaluation)
+/*-- InterviewController.ts ----------------------------------------------------------
+
+   This file defines the AI-enhanced `InterviewController`, an Express controller 
+   that integrates with the Groq API (LLama3-70b-8192 model) to generate and evaluate 
+   technical interview questions and pseudocode responses.
+
+   Features:
+      - Generates interview questions using an AI prompt.
+      - Evaluates candidate pseudocode answers for correctness and logic.
+      - Parses AI output to extract structured feedback and scores.
+      - Handles and logs errors gracefully, returning meaningful responses.
+
+   Endpoints:
+      - POST /api/interview/generate-questions
+          ▸ Sends a prompt to the Groq API to generate interview questions.
+          ▸ Request body: { prompt: string }
+          ▸ Response: { questions: string[] }
+
+      - POST /api/interview/evaluate
+          ▸ Evaluates a pseudocode answer using the Groq AI API.
+          ▸ Request body: { prompt: string }
+          ▸ Response: { score: number, feedback: string }
+
+   Notes:
+      - Requires the `GROQ_API_KEY` environment variable to authenticate API requests.
+      - Uses LLama3 70B model hosted on Groq for rapid and accurate responses.
+      - Strips numbering from generated questions and extracts "Score" and "Feedback"
+        using regex from AI output for consistency.
+
+------------------------------------------------------------------------------------*/
+
 import { controller, httpPost, request, response } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import axios from 'axios';
@@ -33,7 +66,7 @@ export class InterviewController {
 
       const questions = generatedText
         .split('\n')
-        .map((q: string) => q.replace(/^\d+\.\s*/, '')) // clean numbering like "1. "
+        .map((q: string) => q.replace(/^\d+\.\s*/, '')) 
         .filter((q: string) => q.trim() !== '');
 
       res.json({ questions });

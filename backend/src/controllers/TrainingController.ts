@@ -1,58 +1,43 @@
-// import { controller, httpPost, request, response } from 'inversify-express-utils';
-// import { Request, Response } from 'express';
-// import axios from 'axios';
+// Author: Ehab Farhat - Alaa ElSet
+// File: TrainingController.ts
+/*-- TrainingController.ts -----------------------------------------------------------
 
-// @controller('/api/training')
-// export class TrainingController {
-//   @httpPost('/chat')
-//   public async chat(@request() req: Request, @response() res: Response): Promise<void> {
-//     try {
-//       const { prompt } = req.body;
+   This file defines the `TrainingController`, an Express controller that handles the 
+   training and career coaching module. It supports uploading interview transcripts 
+   and interacting with a Groq-hosted AI model to provide career guidance and feedback.
 
-//       // Construct the prompt with career-specific instructions and limitations
-//       const careerPrompt = `
-// You are a career coach.
+   Features:
+      - Allows users to upload or link to a transcript in PDF format.
+      - Parses and stores transcript content for later AI-assisted conversation.
+      - Provides a chat interface that uses the stored transcript and user prompt 
+        to generate job-specific coaching feedback using the LLaMA3-70B model.
 
-// The user has asked for advice or information related to job or career. Respond in a professional manner, providing advice and information that is directly relevant to job searching, career development, or professional growth.
+   Endpoints:
+      - POST /api/training/uploadTranscript
+          ▸ Accepts a local file (multipart/form-data) or a remote PDF URL.
+          ▸ Parses the PDF and stores transcript content in memory.
+          ▸ Request: file or { url: string }
+          ▸ Response: { message: string }
 
-// If the user asks anything unrelated to career matters, politely inform them that you are here to help with job and career-related topics only.
+      - POST /api/training/chat
+          ▸ Accepts a user prompt and (optionally) a transcriptText override.
+          ▸ Sends combined data to Groq AI for context-aware response.
+          ▸ Request body: {
+              prompt: string,
+              transcriptText?: string
+            }
+          ▸ Response: { text: string }
 
-// User's query:
-// ${prompt}
+   Notes:
+      - Uses `multer` for handling file uploads.
+      - Uses `pdf-parse` for extracting text from PDFs.
+      - `node-fetch` is used to download remote PDF files.
+      - Temporary in-memory storage (`transcripts`) should be replaced with 
+        persistent storage in production.
+      - Requires `GROQ_API_KEY` environment variable to function correctly.
 
-// Please respond as a helpful career coach, staying focused on job/career matters.
-// `;
+------------------------------------------------------------------------------------*/
 
-//       // Send the request to the AI model with the career-specific prompt
-//       const response = await axios.post('https://api.groq.com/openai/v1/chat/completions', {
-//         model: 'llama3-70b-8192',
-//         messages: [
-//           { role: 'system', content: 'You are a professional career coach.' },
-//           { role: 'user', content: careerPrompt },
-//         ],
-//         temperature: 0.7,
-//         max_tokens: 500,
-//       }, {
-//         headers: {
-//           Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-//           'Content-Type': 'application/json',
-//         },
-//       });
-
-//       const generatedText = response.data.choices[0]?.message?.content;
-
-//       if (!generatedText) {
-//         res.status(500).json({ error: 'No response generated' });
-//         return;
-//       }
-
-//       res.json({ text: generatedText });
-//     } catch (error: any) {
-//       console.error('Error with career chat:', error.response?.data || error.message);
-//       res.status(500).json({ error: 'Failed to fetch career advice' });
-//     }
-//   }
-// }
 import { controller, httpPost, request, response } from 'inversify-express-utils';
 import { Request, Response } from 'express';
 import multer from 'multer';
@@ -68,23 +53,20 @@ const transcripts: Record<string, string> = {};
 
 @controller('/api/training')
 export class TrainingController {
-  /**
-   * Upload a PDF transcript or pass a URL for later analysis
-   */
   @httpPost('/uploadTranscript', upload.single('transcript'))
 public async uploadTranscript(@request() req: Request, @response() res: Response): Promise<void> {
   try {
     let text: string;
 
     if (req.file) {
-      // ==== local PDF upload ====
+      // local PDF upload
       const buffer = fs.readFileSync(req.file.path);
       const parsed = await pdfParse(buffer);
       text = parsed.text;
       fs.unlinkSync(req.file.path);
 
     } else if (req.body.url) {
-      // ==== remote PDF URL ====
+      // remote PDF URL 
       const pdfRes = await fetch(req.body.url);
       if (!pdfRes.ok) {
         res.status(400).json({ error: 'Could not download PDF from URL' });
@@ -99,7 +81,7 @@ public async uploadTranscript(@request() req: Request, @response() res: Response
       return;
     }
 
-    transcripts['default'] = text;          // store however you like
+    transcripts['default'] = text;          
     res.json({ message: 'Transcript received and stored.' });
 
   } catch (err: any) {
@@ -108,10 +90,6 @@ public async uploadTranscript(@request() req: Request, @response() res: Response
   }
 }
 
-
-  /**
-   * Chat endpoint: integrates transcript (if any) and user prompt
-   */
   @httpPost('/chat')
   public async chat(@request() req: Request, @response() res: Response): Promise<void> {
     try {
