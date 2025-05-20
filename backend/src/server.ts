@@ -70,7 +70,11 @@ server.setConfig(app => {
   /* ---------- CORS ---------- */
   app.use(
     cors({
-      origin: 'https://www.getsuited.online',
+      origin: [
+            'https://www.getsuited.online',
+            'https://getsuited.online',
+            'https://get-suited-getsuiteds-projects.vercel.app',
+            ],
       credentials: true,                                 // allow cookies / auth‑headers
       methods: 'GET,POST,PATCH,PUT,DELETE',
       allowedHeaders: 'Content-Type,Authorization',

@@ -67,7 +67,7 @@ const SignIn: React.FC<SignInProps> = ({ onSignIn }) => {
       <div className="signin-card">
         <h2>Log in</h2>
         <p className="sub-header">
-          New to Design Space? <a href="/signup">Sign up for free</a>
+          New to Design Space? <a href="/register">Sign up for free</a>
         </p>
 
         <div className="social-buttons">
